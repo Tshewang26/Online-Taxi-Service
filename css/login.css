@@ -1,0 +1,128 @@
+body {
+  background-color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.container {
+  max-width: 400px; /* prevents it from stretching too wide on laptop */
+  width: 90%; /* so it fits smaller phone screens */
+  text-align: center;
+  margin: 0 auto;   /* center horizontally */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+ 
+.logo-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.taxi-img {
+  width: 400px;
+  max-width: 300px; /* on laptop it won’t get too big */
+  height: auto;
+  margin-bottom: 25px; /* space between taxi and text */
+}
+
+.ride-title {
+  font-family: 'Brush Script MT', cursive;
+  font-size: 2.5rem;
+  margin: 0;
+  color: #333;
+}
+
+.ride-title {
+  font-family: 'Brush Script MT', cursive;
+  font-size: 1.3rem;
+}
+.lets-go {
+  font-family: 'Brush Script MT', cursive;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 25px; /* spacing before buttons */
+  font-size: 2.5rem;
+}
+
+.custom-btn {
+  background-color: #f7d684;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  width: 100%; /* makes buttons full width on mobile */
+  font-weight: 500;
+  max-width: 250px;
+  margin: 12px auto; /* equal vertical spacing between buttons */
+  display: flex;
+  align-items: center;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  justify-content: center; /* icon right side */
+  gap: 10px; /* keeps icon and text nicely spaced */
+  transition: all 0.3s;
+}
+
+/* Top section: logo + title in same line */
+.logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 0 15px;
+  gap: 15px;
+}
+
+/* Middle section: taxi + text + buttons */
+.main-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.taxi-section {
+  margin-bottom: 40px;
+}
+.custom-btn:hover {
+  background-color: #f5c94d;
+  transform: translateY(-2px);
+}
+
+/* Hover effects for dropdown items - FIXED VERSION */
+.dropdown-menu .dropdown-item {
+  transition: all 0.3s ease;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 2px 5px;
+  width: calc(100% - 10px);
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #f7d684;
+  color: #333;
+  transform: translateX(5px);
+}
+
+/* Fix dropdown menu spacing */
+.dropdown-menu {
+  border-radius: 10px;
+  padding: 5px;
+  overflow: hidden; /* Prevents any overflow */
+  border-radius: 10px;
+  border: 2px solid #999999; /* Darker border */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.custom-btn i {
+  font-size: 1.1rem;
+}
+
+.dropdown-menu {
+  border-radius: 10px;
+}

@@ -1,0 +1,181 @@
+body {
+  background-color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container {
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Back Arrow Button */
+.back-arrow-section {
+  text-align: left;
+  padding: 20px 0 10px;
+}
+
+.back-arrow-btn {
+  background-color: #f7d684;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  transition: all 0.3s;
+  color: #333;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.back-arrow-btn:hover {
+  background-color: #f5c94d;
+  transform: translateY(-2px);
+}
+
+/* Adjust form section to account for back button */
+.form-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.ride-title {
+  font-family: 'Brush Script MT', cursive;
+  font-size: 2.5rem;
+  margin: 0;
+  color: #333;
+}
+
+/* Back button - Match login page button style */
+.back-section {
+  text-align: left;
+  padding: 10px 0 20px;
+}
+
+.back-btn {
+  background-color: #f7d684;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s;
+  color: #333;
+  text-decoration: none;
+  width: auto;
+  max-width: 120px;
+}
+
+.back-btn:hover {
+  background-color: #f5c94d;
+  transform: translateY(-2px);
+  color: #333;
+}
+
+/* Form section */
+.form-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.form-title {
+  font-family: 'Brush Script MT', cursive;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+/* Input fields - Match login page style */
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s;
+  background-color: #f7d684; /* Very light yellow background */
+}
+
+.input-group input:focus {
+  border-color: #f7d684;
+  outline: none;
+  box-shadow: 0 0 5px rgba(247, 214, 132, 0.5); /* Optional glow effect */
+  border-radius: 12px; /* Make sure focus state also has rounded corners */
+}
+
+/* Submit button - Match login page button style */
+.submit-btn {
+  background-color: #f7d684;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 25px;
+  font-size: 1rem;
+  width: auto;
+  font-weight: 500;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s;
+  color: #333;
+}
+
+.submit-btn:hover {
+  background-color: #f5c94d;
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .ride-title {
+    font-size: 2rem;
+  }
+  
+  .form-title {
+    font-size: 1.5rem;
+  }
+  
+  .logo-img {
+    width: 50px;
+    height: 50px;
+  }
+}

@@ -1,0 +1,31 @@
+body {
+  background-color: #fff;
+  font-family: "Arial", sans-serif;
+}
+
+.login-card {
+  width: 280px; /* compact like mobile app */
+  border: 1px solid #ddd;
+}
+
+.custom-input {
+  background-color: #ffe599;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.custom-btn {
+  background-color: #ffc107;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.custom-btn:hover {
+  background-color: #e0a800;
+  color: #fff;
+}
