@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Easy!</title>
+    
+    <style>
+        body {
+            background-color: #FFD700; /* This is a light yellow color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This makes the container take up the full viewport height */
+            margin: 0;
+            font-family: sans-serif;
+            border: 5px solid #FFD700; /* Added the blue border as seen in the image */
+            box-sizing: border-box; /* Ensures the border is included in the element's total width and height */
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .logo-container {
+            width: 200px; /* Adjust this size as needed */
+            height: 200px; /* Adjust this size as needed */
+            margin-bottom: 20px; /* Adds space between the logo and the text */
+            animation: pop-up 0.8s ease-in-out; /* Apply the animation */
+        }
+
+        #logo {
+            width: 100%;
+            height: auto;
+            border-radius: 50%; /* This will make your image circular if it's a square */
+        }
+
+        h1 {
+            font-family: 'Georgia', serif; /* Using a serif font to match the image */
+            font-style: italic;
+            font-size: 2.5em; /* Adjust this size as needed */
+            color: #4b4b4b; /* A dark gray color */
+            animation: pop-up 0.8s ease-in-out 0.2s; /* Apply the animation with a delay */
+        }
+
+        /* The animation keyframes */
+        @keyframes pop-up {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img id="logo" src="C:\Users\ASSUS\OneDrive\Pictures\download (1).png" alt="Company Logo">
+        </div>
+        <h1>Ride Easy!</h1>
+    </div>
+</body>
+</html>

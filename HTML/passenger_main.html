@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JNEC Taxi App</title>
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body>
+  <!-- Main App Container -->
+  <div class="app-container">
+
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="profile-info">
+        <div id="profile-icon" class="profile-icon">
+          <i id="pfp-icon" class="fa-solid fa-user"></i>
+          <img id="pfp-image" src="#" alt="User Profile Picture">
+        </div>
+        <div class="user-details">
+          <p>Kuzuzangpo la!</p>
+          <strong id="user-name">Rinchen Bidha</strong>
+          <span id="user-cid">CID: 10811002763</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <i class="fa-regular fa-bell"></i>
+        <i id="settings-icon" class="fa-solid fa-gear"></i>
+      </div>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+      <div class="search-bar">
+        <input type="text" placeholder="Search taxis">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+
+    <!-- Price List Title -->
+    <h2 class="price-list-title">Price list From JNEC</h2>
+
+    <!-- Redesigned Price List -->
+    <div class="price-list">
+      <div class="price-item">
+        <div class="price-item-info">
+          <i class="fa-solid fa-taxi"></i>
+          <span>White Temple</span>
+        </div>
+        <span class="price-item-value">Nu 200</span>
+      </div>
+
+      <div class="price-item">
+        <div class="price-item-info">
+          <i class="fa-solid fa-taxi"></i>
+          <span>Dewathang</span>
+        </div>
+        <span class="price-item-value">Nu 50</span>
+      </div>
+
+      <div class="price-item">
+        <div class="price-item-info">
+          <i class="fa-solid fa-taxi"></i>
+          <span>Samdrup Jongkhar</span>
+        </div>
+        <span class="price-item-value">Nu 200</span>
+      </div>
+
+      <div class="price-item">
+        <div class="price-item-info">
+          <i class="fa-solid fa-taxi"></i>
+          <span>Gyezor temple</span>
+        </div>
+        <span class="price-item-value">Nu 100</span>
+      </div>
+
+      <div class="price-item">
+        <div class="price-item-info">
+          <i class="fa-solid fa-taxi"></i>
+          <span>Hospital</span>
+        </div>
+        <span class="price-item-value">Nu 50</span>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <div class="nav-item active-nav">
+        <i class="fa-solid fa-house"></i>
+      </div>
+      <div class="nav-item">
+        <i class="fa-solid fa-taxi"></i>
+      </div>
+      <div class="nav-item">
+        <i class="fa-solid fa-user"></i>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Profile Edit Modal -->
+  <div id="profile-modal" class="modal">
+    <div class="modal-content">
+      <h3>Edit Profile</h3>
+      <div class="pfp-upload-container">
+        <label for="pfp-file-input" class="upload-pfp-btn">
+          Upload Profile Picture
+        </label>
+        <input type="file" id="pfp-file-input" accept="image/*">
+      </div>
+      <div class="modal-form">
+        <label for="edit-name">Name</label>
+        <input type="text" id="edit-name" placeholder="Enter new name">
+        
+        <label for="edit-cid">CID</label>
+        <input type="text" id="edit-cid" placeholder="Enter new CID" maxlength="11">
+        <span id="cid-error-message"></span>
+      </div>
+      <div class="modal-actions">
+        <button class="cancel-btn">Cancel</button>
+        <button class="save-btn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script src="../JAVA/script.js"></script>
+</body>
+</html>
