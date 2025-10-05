@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account - RideEasy</title>
+    <link rel="stylesheet" href="../CSS/deleteAccount.css">
+</head>
+<body>
+    <div class="container">
+        <div class="delete-interface">
+            <div class="header">
+                <button class="back-btn" onclick="goBack()"></button>
+                <h1 class="title">
+                    <span class="trash-icon">🗑</span>
+                    Delete Account
+                </h1>
+            </div>
+            
+            <div class="content">
+                <div id="message-box" class="message-box"></div>
+
+                <div class="warning-box">
+                    ⚠ <b>WARNING:</b> Deleting your account is permanent. All ride history, saved locations, and personal data will be immediately and irreversibly removed. This action cannot be undone.
+                </div>
+
+                <form id="delete-account-form">
+                    <div class="form-group">
+                        <label for="password-confirm">Confirm your Password to proceed</label>
+                        <input type="password" id="password-confirm" required minlength="6">
+                    </div>
+                    
+                    <button type="submit" class="delete-btn">
+                        I Understand, Delete My Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal/Pop-up Structure -->
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h2 id="modal-title" class="modal-title"></h2>
+            <div id="modal-content" class="modal-content"></div>
+            <div id="modal-actions" class="modal-actions"></div>
+        </div>
+    </div>
+
+    <script src="../JSS/deleteAccount.js"></script>
+</body>
+</html>

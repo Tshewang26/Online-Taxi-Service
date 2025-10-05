@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Online Taxi Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/notification.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid app-container p-0">
+        <!-- Main Content Area -->
+        <div class="main-content-area">
+            <!-- Notifications Header -->
+            <div class="notifications-header">
+                <button class="back-btn" id="backToDashboard" data-bs-toggle="tooltip" data-bs-placement="right" title="Back to Dashboard">
+                    <span class="material-icons">arrow_back</span>
+                </button>
+                <div class="header-title">
+                    <span>Notification</span>
+                    <span class="material-icons notification-icon">notifications</span>
+                </div>
+            </div>
+
+            <!-- Notifications Content -->
+            <div class="notifications-content">
+                <!-- Notification Items -->
+                <div class="notification-item" data-id="1">
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="notification-title">Password</span>
+                            <span class="notification-time">9 AM</span>
+                        </div>
+                        <div class="notification-message">
+                            Your Password has been successfully changed.
+                        </div>
+                    </div>
+                    <button class="delete-btn" data-id="1" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete notification">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+
+                <div class="notification-item" data-id="2">
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="notification-title">Ride request</span>
+                            <span class="notification-time">5 PM</span>
+                        </div>
+                        <div class="notification-message">
+                            Rinchen Bidha has requested a ride from JNEC to Dewathang.
+                        </div>
+                    </div>
+                    <button class="delete-btn" data-id="2" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete notification">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+
+                <div class="notification-item" data-id="3">
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="notification-title">Booking confirmed</span>
+                            <span class="notification-time">2 PM</span>
+                        </div>
+                        <div class="notification-message">
+                            Your ride booking from Thimphu to Paro has been confirmed.
+                        </div>
+                    </div>
+                    <button class="delete-btn" data-id="3" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete notification">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+
+                <div class="notification-item" data-id="4">
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="notification-title">Payment received</span>
+                            <span class="notification-time">Yesterday</span>
+                        </div>
+                        <div class="notification-message">
+                            Payment of Nu. 500 has been credited to your account.
+                        </div>
+                    </div>
+                    <button class="delete-btn" data-id="4" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete notification">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+
+                <!-- Empty state (hidden by default) -->
+                <div class="empty-notifications" id="emptyState" style="display: none;">
+                    <div class="empty-icon">
+                        <span class="material-icons">notifications_off</span>
+                    </div>
+                    <div class="empty-message">
+                        <h5>No notifications</h5>
+                        <p>You're all caught up! No new notifications at the moment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clear All Button -->
+            <div class="notifications-actions">
+                <button class="clear-all-btn" id="clearAllBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete all notifications">
+                    Clear All Notifications
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../JSS/notification.js"></script>
+</body>
+</html>

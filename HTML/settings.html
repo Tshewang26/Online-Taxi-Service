@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RideEasy - Settings</title>
+  <link rel="stylesheet" href="../CSS/settings.css">
+</head>
+<body>
+  <div class="container">
+    <div class="settings-interface">
+      <div class="header">
+        <button class="back-btn" onclick="goBack()"></button>
+        <h1 class="title">
+          <div class="settings-icon"></div>
+          Settings
+        </h1>
+      </div>
+      
+      <div class="content">
+        <div class="menu">
+          <!-- About us is a standard link -->
+          <a href="../HTML/aboutUs.html" class="menu-link">
+            <div class="menu-item">
+              <div class="icon about-icon">📋</div>
+              <div class="text">About us</div>
+              <div class="arrow">→</div>
+            </div>
+          </a>
+            
+          <!-- Change password is a standard link -->
+          <a href="../HTML/changePassword.html" class="menu-link">
+            <div class="menu-item">
+              <div class="icon password-icon">🔒</div>
+              <div class="text">Change password</div>
+              <div class="arrow">→</div>
+            </div>
+          </a>
+          
+          <!-- Contact Us triggers modal -->
+          <div id="contact-setting" class="menu-link">
+            <div class="menu-item">
+              <div class="icon contact-icon">📞</div>
+              <div class="text">Contact us</div>
+              <div class="arrow">→</div>
+            </div>
+          </div>
+          
+          <!-- Delete Account is a standard link -->
+          <a href="../HTML/deleteAccount.html" class="menu-link">
+            <div class="menu-item">
+              <div class="icon delete-icon">🗑</div>
+              <div class="text">Delete Account</div>
+              <div class="arrow">→</div>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Logout button with modal -->
+        <button class="logout-btn" onclick="handleLogout()">Log out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="custom-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h2 id="modal-title" class="modal-title"></h2>
+      <div id="modal-content" class="modal-content"></div>
+      <div id="modal-actions" class="modal-actions"></div>
+    </div>
+  </div>
+
+  <script src="../JSS/settings.js"></script>
+</body>
+</html>

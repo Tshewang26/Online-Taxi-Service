@@ -1,0 +1,486 @@
+/* Custom Variables */
+:root {
+    --gold-color: #FFD700;
+    --red-booked: #DC3545;
+    --black-available: #000000;
+    --purple-pending: #800080;
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 70px;
+    --header-height: 70px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f5f6fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('../Images/background.png') center/cover fixed;
+  filter: blur(6px);
+  z-index: -1;
+}
+
+/* --- Main Content Layout --- */
+.app-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content-area {
+    width: 100%;
+    padding: 0;
+    transition: margin-left 0.3s ease;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Header --- */
+/* .dashboard-header {
+    background-color: #fff;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+} */
+
+/* --- Logo Styling --- */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.dashboard-logo {
+    height: 55px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: 48px;
+    font-weight: normal;
+    color: #333;
+    font-family: 'Satisfy', cursive;
+    letter-spacing: 2px;
+    /* font-style:italic;  */
+}
+
+/* --- Profile Circle --- */
+.profile-circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: var(--gold-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-circle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.profile-icon-placeholder {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+    filter: invert(1);
+}
+
+/* --- Icon Buttons --- */
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: #333;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.icon-btn:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.1);
+}
+
+.icon-btn .material-icons {
+    font-size: 24px;
+}
+
+/* --- Notification Badge --- */
+.notification-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 10px;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Dashboard Content --- */
+.dashboard-content {
+    padding: 30px;
+    overflow-y: auto;
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* --- Seat Status Section --- */
+.seat-status-card .card-body {
+    padding: 50px;
+}
+
+.seat-status-box {
+    background-color: var(--gold-color);
+    padding: 30px 20px !important;
+}
+
+.seat-icon {
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    transition: transform 0.2s;
+}
+
+/* Pending seats have blinking animation */
+.seat-icon.pending {
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
+}
+
+.seat-icon:hover {
+    transform: none;
+}
+
+.seat-placeholder, .driver-placeholder {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+    filter: brightness(0);
+}
+
+.seat-placeholder.red {
+    filter: hue-rotate(300deg) saturate(3) brightness(0.6);
+}
+
+.seat-placeholder.purple {
+    filter: hue-rotate(280deg) saturate(3) brightness(0.4);
+}
+
+/* --- Seat Legend --- */
+.seat-legend {
+    font-size: 0.9rem;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+}
+
+.booked-color { background-color: var(--red-booked); }
+.available-color { background-color: var(--black-available); }
+.pending-color { background-color: var(--purple-pending); }
+
+/* --- Action Buttons Grid --- */
+.actions-card .card-body {
+    padding: 25px;
+    height: 400px; 
+}
+
+.action-buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+    height: 50hv;
+
+}
+
+.action-btn {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: var(--gold-color);
+    border: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 70px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+    background-color: #ffd000;
+}
+
+.action-btn:active {
+    transform: translateY(-2px);
+}
+
+.btn-icon-placeholder {
+    width: 100%;
+    height: 10vh;
+    object-fit: contain;
+    filter: brightness();
+    margin-bottom: 10px;
+     display: flex;
+    /* background-color: var(--gold-color);
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; */
+}
+
+.action-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #000;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.action-btn-large {
+    grid-column: 1 / -1;
+    aspect-ratio: 2.5;
+}
+
+/* --- Responsive Design --- */
+
+/* Small Mobile View (up to 576px) */
+@media (max-width: 576px) {
+    .dashboard-header {
+        padding: 12px 15px;
+    }
+    
+    .dashboard-logo {
+        height: 30px;
+    }
+    
+    .logo-text {
+        font-size: 0.95rem;
+    }
+    
+    .dashboard-header h5 {
+        font-size: 0.9rem;
+    }
+    
+    .dashboard-header p {
+        font-size: 0.75rem;
+    }
+    
+    .profile-circle {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .icon-btn .material-icons {
+        font-size: 20px;
+    }
+    
+    .icon-btn {
+        padding: 6px;
+    }
+    
+    .dashboard-content {
+        padding: 15px;
+    }
+    
+    .seat-icon {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .action-label {
+        font-size: 0.75rem;
+    }
+    
+    .action-buttons-grid {
+        gap: 12px;
+    }
+    
+    .card-body {
+        padding: 20px !important;
+    }
+    
+    .seat-status-box {
+        padding: 20px 15px !important;
+    }
+    
+    .card-title {
+        font-size: 1rem;
+    }
+}
+
+/* Mobile View (577px to 767px) */
+@media (min-width: 577px) and (max-width: 767px) {
+    .dashboard-header {
+        padding: 15px 20px;
+    }
+    
+    .dashboard-content {
+        padding: 20px;
+    }
+    
+    .seat-icon {
+        width: 65px;
+        height: 65px;
+    }
+}
+
+/* Tablet View (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .dashboard-content {
+        padding: 25px;
+    }
+    
+    .action-buttons-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop View (992px and above) */
+@media (min-width: 992px) {
+    .dashboard-header {
+        padding: 20px 40px;
+    }
+    
+    .dashboard-logo {
+        height: 40px;
+    }
+    
+    .logo-text {
+        font-size: 1.2rem;
+    }
+    
+    .dashboard-content {
+        padding: 40px;
+    }
+    
+    .profile-circle {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .dashboard-header h5 {
+        font-size: 1.15rem;
+    }
+    
+    .dashboard-header p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Large Desktop (1200px and above) */
+@media (min-width: 1200px) {
+    .dashboard-content {
+        padding: 50px;
+    }
+    
+    .dashboard-logo {
+        height: 45px;
+    }
+    
+    .logo-text {
+        font-size: 1.3rem;
+    }
+}
+
+/* Extra Small Devices - Landscape orientation */
+@media (max-width: 767px) and (orientation: landscape) {
+    .dashboard-content {
+        padding: 15px;
+    }
+    
+    .mobile-logo-section {
+        padding: 5px 0;
+    }
+}
+
+/* .card-body{
+    width: 50%;
+} */
+
+/* .action-buttons-grid{
+    height: 20vh;
+} */
+
+.action-btn{
+    height: 8vh;
+}
+
+.card{
+    width: 70%;
+    margin-left: 200px;
+}

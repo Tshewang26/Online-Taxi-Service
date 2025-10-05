@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Requests - Ride Easy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            background: none;
+        }
+
+        /* Blurred Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('../Images/background.png') center/cover fixed;
+            filter: blur(6px);
+            z-index: -1;
+        }
+
+        /* Container */
+        .app-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: calc(100% - 40px);
+            margin: 20px auto;
+            overflow: hidden;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+
+        /* Header */
+        .booking-header {
+            background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+            color: #333;
+            padding: 25px 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-nav {
+            position: absolute;
+            top: 25px;
+            left: 20px;
+            z-index: 11;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: #333;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header-logo {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .header-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: rgba(51, 51, 51, 0.8);
+            margin-top: 5px;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background: #fff;
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 16px;
+            background: none;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: #333;
+            background: #f9f9f9;
+        }
+
+        .tab-btn.active {
+            color: #FFD700;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+        }
+
+        .badge-count {
+            display: inline-block;
+            background: #FFD700;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 6px;
+            font-weight: 700;
+        }
+
+        .tab-btn.active .badge-count {
+            background: #333;
+            color: #FFD700;
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: 20px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Booking Card */
+        .booking-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .booking-card:hover {
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+            border-color: #FFD700;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f5f5f5;
+        }
+
+        .booking-id {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .time-badge {
+            background: #FFD700;
+            color: #333;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* Route Display */
+        .route-display {
+            margin: 20px 0;
+        }
+
+        .route-point {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .route-icon {
+            width: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .route-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+        }
+
+        .route-dot.pickup {
+            background: #FFD700;
+            border: 2px solid #333;
+        }
+
+        .route-line {
+            width: 3px;
+            height: 30px;
+            background: linear-gradient(to bottom, #FFD700, #ddd);
+            margin: 4px 0;
+        }
+
+        .route-details {
+            flex: 1;
+        }
+
+        .route-label {
+            font-size: 0.75rem;
+            color: #999;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .route-address {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Info Row */
+        .info-row {
+            display: flex;
+            gap: 20px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .info-item i {
+            font-size: 1.1rem;
+            color: #FFD700;
+        }
+
+        /* Passenger Info */
+        .passenger-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFBF0 100%);
+            border-radius: 10px;
+            margin: 16px 0;
+            border: 1px solid #FFD700;
+        }
+
+        .passenger-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            border: 2px solid #333;
+        }
+
+        .passenger-details {
+            flex: 1;
+        }
+
+        .passenger-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .passenger-phone {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .contact-btn {
+            background: #FFD700;
+            color: #333;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .contact-btn:hover {
+            background: #FFC700;
+            transform: scale(1.05);
+        }
+
+        /* Seat Pills */
+        .seat-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+        }
+
+        .seat-pill {
+            background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+            color: #333;
+            border: 2px solid #FFD700;
+        }
+
+        .btn-accept:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-decline {
+            background: #f5f5f5;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-decline:hover {
+            background: #e8e8e8;
+            border-color: #d0d0d0;
+        }
+
+        .btn-complete {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: #fff;
+            border: 2px solid #4CAF50;
+        }
+
+        .btn-complete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+            color: #FFD700;
+        }
+
+        .empty-state h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                width: calc(100% - 20px);
+                margin: 10px auto;
+                border-radius: 15px;
+            }
+
+            .booking-header {
+                padding: 20px 30px;
+            }
+
+            .header-text {
+                font-size: 1.1rem;
+            }
+
+            .content-area {
+                padding: 15px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .passenger-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="booking-header">
+            <div class="back-nav">
+                <button class="back-btn" id="backBtn">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+            <div class="header-content">
+                <img src="../Images/logo.png" alt="Ride Easy Logo" class="header-logo">
+                <div>
+                    <div class="header-text">Ride Easy</div>
+                    <div class="header-subtitle">Manage Your Bookings</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-tab="pending">
+                Requests <span class="badge-count">3</span>
+            </button>
+            <button class="tab-btn" data-tab="confirmed">
+                Confirmed <span class="badge-count">2</span>
+            </button>
+            <button class="tab-btn" data-tab="completed">
+                Completed <span class="badge-count">1</span>
+            </button>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Pending Tab -->
+            <div class="tab-content active" id="pending-tab">
+                <div id="pending-bookings"></div>
+            </div>
+
+            <!-- Confirmed Tab -->
+            <div class="tab-content" id="confirmed-tab">
+                <div id="confirmed-bookings"></div>
+            </div>
+
+            <!-- Completed Tab -->
+            <div class="tab-content" id="completed-tab">
+                <div id="completed-bookings"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mock data with generic location names
+        let bookingsData = {
+            pending: [
+                {
+                    id: 'BK001',
+                    passenger: 'Leki Choden',
+                    phone: '+975 17123456',
+                    pickup: 'JNEC',
+                    dropoff: 'White Temple',
+                    datetime: '2025-10-05T14:30',
+                    vehicle: '7-Seater (SUV/Van)',
+                    seats: ['Front Passenger', 'Rear Window Left'],
+                    payment: 'Cash'
+                },
+                {
+                    id: 'BK002',
+                    passenger: 'Yoesel Dema',
+                    phone: '+975 17234567',
+                    pickup: 'Hospital',
+                    dropoff: 'Geyzor Lhakhang',
+                    datetime: '2025-10-05T09:00',
+                    vehicle: '4-Seater (Sedan)',
+                    seats: ['Rear Window Right'],
+                    payment: 'Online Payment'
+                },
+                {
+                    id: 'BK003',
+                    passenger: 'Sonam Wangchuk',
+                    phone: '+975 17345678',
+                    pickup: 'Dewathang Town',
+                    dropoff: 'JNEC',
+                    datetime: '2025-10-06T07:00',
+                    vehicle: '4-Seater (Sedan)',
+                    seats: ['Front Passenger', 'Rear Middle'],
+                    payment: 'Cash'
+                }
+            ],
+            confirmed: [
+                {
+                    id: 'BK004',
+                    passenger: 'Sonam Choden',
+                    phone: '+975 17456789',
+                    pickup: 'Hospital',
+                    dropoff: 'White Temple',
+                    datetime: '2025-10-05T06:30',
+                    vehicle: '7-Seater (SUV/Van)',
+                    seats: ['Rear Window Left', 'Rear Window Right'],
+                    payment: 'Online Payment'
+                },
+                {
+                    id: 'BK005',
+                    passenger: 'Jigme Namgyal',
+                    phone: '+975 17567890',
+                    pickup: 'JNEC',
+                    dropoff: 'SamdrupJongkhar',
+                    datetime: '2025-10-04T16:00',
+                    vehicle: '4-Seater (Sedan)',
+                    seats: ['Front Passenger'],
+                    payment: 'Cash'
+                }
+            ],
+            completed: [
+                {
+                    id: 'BK006',
+                    passenger: 'Dawa Tshering',
+                    phone: '+975 17678901',
+                    pickup: 'Samdrupjongkhar',
+                    dropoff: 'JNEC',
+                    datetime: '2025-10-03T08:00',
+                    vehicle: '4-Seater (Sedan)',
+                    seats: ['Rear Window Right'],
+                    payment: 'Cash'
+                }
+            ]
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderBookings('pending');
+            renderBookings('confirmed');
+            renderBookings('completed');
+            updateBadgeCounts();
+
+            // Back button - navigate to driver dashboard
+            document.getElementById('backBtn').addEventListener('click', () => {
+                window.location.href = 'driverDashboard.html';
+            });
+
+            // Tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.getAttribute('data-tab');
+                    switchTab(tab);
+                });
+            });
+        });
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            document.getElementById(`${tab}-tab`).classList.add('active');
+        }
+
+        function renderBookings(status) {
+            const container = document.getElementById(`${status}-bookings`);
+            const bookings = bookingsData[status];
+
+            if (bookings.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-inbox"></i>
+                        <h3>No ${status} bookings</h3>
+                        <p>You don't have any ${status} rides at the moment.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = bookings.map(b => createBookingCard(b, status)).join('');
+            attachEventListeners(status);
+        }
+
+        function createBookingCard(booking, status) {
+            const dt = new Date(booking.datetime);
+            const timeStr = dt.toLocaleString('en-US', {
+                month: 'short', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            const initial = booking.passenger.charAt(0).toUpperCase();
+
+            let actions = '';
+            if (status === 'pending') {
+                actions = `
+                    <div class="action-buttons">
+                        <button class="btn-action btn-accept" data-id="${booking.id}" data-action="accept">
+                            <i class="fa-solid fa-check"></i> Accept
+                        </button>
+                        <button class="btn-action btn-decline" data-id="${booking.id}" data-action="decline">
+                            <i class="fa-solid fa-times"></i> Decline
+                        </button>
+                    </div>
+                `;
+            } else if (status === 'confirmed') {
+                actions = `
+                    <div class="action-buttons">
+                        <button class="btn-action btn-complete" data-id="${booking.id}" data-action="complete">
+                            <i class="fa-solid fa-check-circle"></i> Complete Ride
+                        </button>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="booking-card">
+                    <div class="card-header">
+                        <div class="booking-id">#${booking.id}</div>
+                        <div class="time-badge">${timeStr}</div>
+                    </div>
+
+                    <div class="route-display">
+                        <div class="route-point">
+                            <div class="route-icon">
+                                <div class="route-dot pickup"></div>
+                                <div class="route-line"></div>
+                            </div>
+                            <div class="route-details">
+                                <div class="route-label">PICKUP</div>
+                                <div class="route-address">${booking.pickup}</div>
+                            </div>
+                        </div>
+                        <div class="route-point">
+                            <div class="route-icon">
+                                <div class="route-dot"></div>
+                            </div>
+                            <div class="route-details">
+                                <div class="route-label">DROP-OFF</div>
+                                <div class="route-address">${booking.dropoff}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="passenger-info">
+                        <div class="passenger-avatar">${initial}</div>
+                        <div class="passenger-details">
+                            <div class="passenger-name">${booking.passenger}</div>
+                            <div class="passenger-phone">${booking.phone}</div>
+                        </div>
+                        <button class="contact-btn">
+                            <i class="fa-solid fa-phone"></i> Call
+                        </button>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-item">
+                            <i class="fa-solid fa-car"></i>
+                            <span>${booking.vehicle}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-credit-card"></i>
+                            <span>${booking.payment}</span>
+                        </div>
+                    </div>
+
+                    <div class="seat-pills">
+                        ${booking.seats.map(seat => `<span class="seat-pill">${seat}</span>`).join('')}
+                    </div>
+
+                    ${actions}
+                </div>
+            `;
+        }
+
+        function attachEventListeners(status) {
+            document.querySelectorAll(`#${status}-bookings .btn-action`).forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const action = this.getAttribute('data-action');
+                    handleAction(id, action);
+                });
+            });
+        }
+
+        function handleAction(id, action) {
+            if (action === 'accept') {
+                if (confirm('Accept this booking request?')) {
+                    moveBooking(id, 'pending', 'confirmed');
+                    alert('Booking accepted! Passenger will be notified.');
+                }
+            } else if (action === 'decline') {
+                if (confirm('Decline this booking request?')) {
+                    removeBooking(id, 'pending');
+                    alert('Booking declined. Passenger will be notified.');
+                }
+            } else if (action === 'complete') {
+                if (confirm('Mark this ride as completed?')) {
+                    moveBooking(id, 'confirmed', 'completed');
+                    alert('Ride marked as completed!');
+                }
+            }
+        }
+
+        function moveBooking(id, from, to) {
+            const idx = bookingsData[from].findIndex(b => b.id === id);
+            if (idx !== -1) {
+                const booking = bookingsData[from].splice(idx, 1)[0];
+                bookingsData[to].push(booking);
+                renderBookings(from);
+                renderBookings(to);
+                updateBadgeCounts();
+            }
+        }
+
+        function removeBooking(id, from) {
+            bookingsData[from] = bookingsData[from].filter(b => b.id !== id);
+            renderBookings(from);
+            updateBadgeCounts();
+        }
+
+        function updateBadgeCounts() {
+            document.querySelectorAll('.badge-count').forEach((badge, idx) => {
+                const counts = [
+                    bookingsData.pending.length,
+                    bookingsData.confirmed.length,
+                    bookingsData.completed.length
+                ];
+                badge.textContent = counts[idx];
+            });
+        }
+    </script>
+</body>
+</html>
