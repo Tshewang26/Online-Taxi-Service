@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History - RideEasy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Background image styling - consistent with other pages */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('../IMAGE/chinese-clouds-symbol-grace-vector-50202250.jpg') center/cover fixed;
+            filter: blur(6px);
+            z-index: -1;
+        }
+
+        .container {
+            /* FILL VIEWPORT */
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .bookings-interface {
+            background: transparent; /* Changed to transparent so blur works */
+            border-radius: 0;
+            box-shadow: none;
+            width: 100%;
+            height: 100vh; 
+            overflow: hidden;
+            max-height: 100vh; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: #fbc02d;
+            padding: 40px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+        }
+
+        .back-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: absolute;
+            left: 50px;
+        }
+        .back-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateX(-5px) scale(1.05);
+        }
+        .back-btn::before {
+            content: '←';
+            font-size: 22px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .title {
+            font-size: 30px;
+            color: white;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .history-icon {
+            font-size: 28px;
+        }
+
+        .content {
+            padding: 30px;
+            overflow-y: auto;
+            flex-grow: 1;
+            
+            /* UPDATED: Added transparent background color and blur filter */
+            background-color: rgba(255, 255, 255, 0.2); 
+            backdrop-filter: blur(8px); /* Apply blur to the background behind the content */
+            
+            /* The image background is now provided by the body::before element */
+        }
+
+        /* --- Booking List Styles --- */
+        .booking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            /* Removed max-width: 600px to allow it to take full width */
+            width: 100%; /* Ensure it spans the full content width */
+            margin: 0 auto;
+        }
+
+        .booking-card {
+            background-color: rgba(255, 255, 255, 0.95); /* Keep cards mostly opaque for contrast */
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .booking-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #fbc02d;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .date-info {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .cost-and-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cost {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #fbc02d;
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.75em;
+            font-weight: 700;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .status-badge.completed {
+            background-color: #d4edda; /* Light green */
+            color: #155724; /* Dark green */
+        }
+
+        .status-badge.pending {
+            background-color: #fff3cd; /* Light yellow */
+            color: #856404; /* Dark yellow */
+        }
+        
+        .status-badge.cancelled {
+            background-color: #f8d7da; /* Light red */
+            color: #721c24; /* Dark red */
+        }
+
+
+        .location-details {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .location-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .location-icon {
+            font-size: 18px;
+            color: #fbc02d;
+            font-weight: bold;
+        }
+
+        .driver-details {
+            display: flex;
+            /* Changed to space-between for mobile compatibility, but will only show one item */
+            justify-content: space-between; 
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .driver-info {
+            color: #777;
+        }
+
+        /* Removed .rating CSS class */
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container { padding: 0; }
+            .bookings-interface { border-radius: 0; max-width: 100%; max-height: 100vh; }
+            .header {
+                padding: 25px 20px;
+            }
+            .back-btn { position: absolute; left: 20px; top: 20px; width: 40px; height: 40px; }
+            .title { font-size: 24px; }
+            .content { padding: 20px 15px; }
+            .booking-header { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .cost-and-status { margin-top: 5px; }
+            .cost { font-size: 1.2em; }
+            .driver-details { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .location-details { font-size: 14px; }
+        }
+
+        @media (max-width: 480px) {
+            .header { padding: 20px 15px; }
+            .title { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bookings-interface">
+            <div class="header">
+                <button class="back-btn" onclick="goBack()"></button>
+                <h1 class="title">
+                    <span class="history-icon">📜</span>
+                    Booking History
+                </h1>
+            </div>
+            
+            <div class="content">
+                <div id="booking-list" class="booking-list">
+                    <!-- Booking Cards will be injected here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Functionality for the back button.
+         */
+        function goBack() {
+            window.history.back();
+        }
+
+        // Mock data representing past and upcoming rides, now including status
+        const mockBookings = [
+            // NEW RIDE based on your screenshot
+            { id: 1007, date: "2025-05-30", time: "17:00", pickup: "JNEC", dropoff: "Samdrup Jongkhar", cost: 10.00, driver: "Nima Dorji", rating: 0.0, status: "Pending" },
+            
+            // Existing rides, updated with status
+            { id: 1001, date: "2024-10-25", time: "17:30", pickup: "JNEC", dropoff: "Hospital", cost: 50, driver: "Dema",  status: "Completed" },
+            { id: 1002, date: "2024-10-22", time: "09:15", pickup: "JNEC", dropoff: "Dewathang", cost: 50, driver: "Sangay",  status: "Completed" },
+            { id: 1003, date: "2024-10-18", time: "21:45", pickup: "JNEC", dropoff: "Garage,SJ", cost: 150, driver: "Norbu", status: "Completed" },
+            ];
+
+        /**
+         * Renders the list of bookings dynamically.
+         */
+        function renderBookings() {
+            const listContainer = document.getElementById('booking-list');
+            
+            if (mockBookings.length === 0) {
+                listContainer.innerHTML = '<p style="text-align: center; color: #999;">No past or upcoming bookings found.</p>';
+                return;
+            }
+
+            // Sort by date/time (most recent or upcoming first)
+            mockBookings.sort((a, b) => new Date(`${b.date} ${b.time}`) - new Date(`${a.date} ${a.time}`));
+
+            mockBookings.forEach(booking => {
+                
+                // Determine driver info visibility
+                const driverInfo = booking.status === 'Pending' 
+                    ? `Driver: ${booking.driver} (Assigned)` 
+                    : `Driver: ${booking.driver}`;
+
+
+                const card = document.createElement('div');
+                card.className = 'booking-card';
+                card.innerHTML = `
+                    <div class="booking-header">
+                        <span class="date-info">${booking.date} at ${booking.time}</span>
+                        <div class="cost-and-status">
+                            <span class="cost">NU.${booking.cost.toFixed(2)}</span>
+                            <span class="status-badge ${booking.status.toLowerCase()}">${booking.status}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="location-details">
+                        <div class="location-item">
+                            <span class="location-icon">📍</span>
+                            <span>Pickup: <strong>${booking.pickup}</strong></span>
+                        </div>
+                        <div class="location-item">
+                            <span class="location-icon">🏁</span>
+                            <span>Drop-off: <strong>${booking.dropoff}</strong></span>
+                        </div>
+                    </div>
+
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        // Initialize rendering on page load
+        window.onload = renderBookings;
+        
+        // Add touch feedback for mobile interaction
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.back-btn').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

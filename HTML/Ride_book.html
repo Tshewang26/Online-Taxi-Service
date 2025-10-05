@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideNow - Book Your Taxi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/Ride_book.css">
+</head>
+<body>
+    <div class="container">
+        <div class="back-nav" id="back-nav-container">
+            <button class="back-btn" onclick="handleBackNavigation()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+
+        <div class="header">
+            <h1>🚕 RideNow</h1>
+            <p>Book your ride in seconds</p>
+        </div>
+
+        <div class="form-content-wrapper" id="booking-form-wrapper">
+            <form id="bookingForm" onsubmit="return false">
+                <div class="form-group two-column">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group two-column">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+975 12345678" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pickup">Pickup Location</label>
+                    <input type="text" id="pickup" placeholder="Enter pickup address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dropoff">Drop-off Location</label>
+                    <input type="text" id="dropoff" placeholder="Enter destination" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Pickup Date & Time</label>
+                    <div id="datetime-group">
+                        <input type="date" id="date-input" required>
+                        <input type="time" id="time-input" required>
+                    </div>
+                </div>
+
+                <div class="form-group" id="vehicle-selection-section">
+                    <label>Choose Vehicle Type</label>
+                    <div class="vehicle-options">
+                        <div class="vehicle-card" data-vehicle="4-seater">
+                            <div class="vehicle-icon">🚗</div>
+                            <div class="vehicle-name">4-Seater (Sedan)</div>
+                            <div class="vehicle-price">Low Price</div>
+                        </div>
+                        <div class="vehicle-card" data-vehicle="7-seater">
+                            <div class="vehicle-icon">🚐</div>
+                            <div class="vehicle-name">7-Seater (SUV/Van)</div>
+                            <div class="vehicle-price">Standard Price</div>
+                        </div>
+                        <div class="vehicle-card" data-vehicle="8-seater">
+                            <div class="vehicle-icon">🚌</div>
+                            <div class="vehicle-name">8-Seater (Commuter)</div>
+                            <div class="vehicle-price">Higher Price</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="available-taxis-section" class="form-group hidden-element">
+                    <label id="taxi-label">Available Taxis (<span id="selected-vehicle-label"></span>)</label>
+                    <div id="taxi-options" class="taxi-options-list"></div>
+                </div>
+
+                <div id="seat-selection-section" class="form-group hidden-element">
+                    <label id="seat-selection-label"></label>
+                    <div class="seat-legend">
+                        <div class="legend-item">
+                            <div class="legend-color legend-available"></div>
+                            <span>Available</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color legend-selected"></div>
+                            <span>Selected</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color legend-booked"></div>
+                            <span>Booked</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color legend-window"></div>
+                            <span>Window Seat</span>
+                        </div>
+                    </div>
+                    <div id="seat-options" class="seat-options-grid"></div>
+                </div>
+
+                <div id="error-message" class="error-message"></div>
+
+                <button type="button" class="btn-book" onclick="handleFormSubmission()">Continue</button>
+            </form>
+        </div>
+
+        <div id="payment-selection-section">
+            <div class="payment-title">
+                Choose Payment Method
+                <span>💵</span>
+            </div>
+
+            <div class="payment-options-grid">
+                <div class="payment-card" onclick="handlePaymentSelection('Cash')">
+                    <div class="payment-card-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+                    <div class="payment-card-text">Pay with Cash</div>
+                </div>
+
+                <div class="payment-card" onclick="handlePaymentSelection('Online Payment')">
+                    <div class="payment-card-icon"><i class="fa-solid fa-credit-card"></i></div>
+                    <div class="payment-card-text">Pay Online</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="confirmation" id="confirmation">
+            <div class="confirmation-icon">✅</div>
+            <h2 id="confirmationTitle"></h2>
+            <p id="confirmationMessage"></p>
+            <p id="confirmationDetails"></p>
+            <button class="btn-new" onclick="resetForm()">Book Another Ride</button>
+        </div>
+    </div>
+
+    <script src="../JAVA/Ride_book.js"></script>
+</body>
+</html>

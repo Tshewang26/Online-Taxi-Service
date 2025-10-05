@@ -1,0 +1,522 @@
+/* Define a consistent font and reset base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- Global Body & Blurred Background Styles --- */
+body {
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: none;
+}
+
+/* Blurred Background Image */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* Placeholder image for a transport/road theme */
+    background: url('../IMAGE/chinese-clouds-symbol-grace-vector-50202250.jpg') no-repeat center center / cover;
+    filter: blur(6px); /* Apply blur effect */
+    z-index: -1;
+}
+
+/* --- Main Container (Glassmorphism Effect) --- */
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    max-width: 1100px; 
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    max-height: 95vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* --- Header Style --- */
+.header {
+    background-color: #fbc02d; /* Accent Color (Yellow/Gold) */
+    color: white;
+    padding: 25px 40px;
+    text-align: center;
+    margin-bottom: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 0;
+    z-index: 10;
+}
+
+.header h1 {
+    color: white;
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.header p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+}
+
+/* --- BACK BUTTON STYLES (Always visible) --- */
+.back-nav {
+    position: absolute;
+    top: 25px;
+    left: 20px;
+    z-index: 11;
+}
+
+.back-btn {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: white;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+/* --- END BACK BUTTON STYLES --- */
+
+.hidden-element {
+    display: none !important;
+}
+
+/* Wrapper for content padding - MODIFIED FOR FULL WIDTH */
+.form-content-wrapper {
+    padding: 30px 40px; /* Restored horizontal padding for better spacing */
+    width: 100%;
+}
+
+/* Form layout - MODIFIED FOR FULL WIDTH */
+#bookingForm {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+    gap: 20px;
+    width: 100%;
+}
+
+/* Make form groups span full width when needed */
+#bookingForm > .form-group:not(.two-column) {
+    grid-column: 1 / -1;
+}
+
+/* Two-column layout for name and phone inputs */
+.two-column {
+    grid-column: span 1;
+}
+
+@media (max-width: 768px) {
+    #bookingForm {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+    .two-column {
+        grid-column: 1 / -1;
+    }
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* Styling for separated date/time inputs */
+#datetime-group {
+    display: flex;
+    gap: 10px;
+}
+
+#datetime-group input {
+    flex: 1;
+    width: 50%;
+}
+
+/* Input fields and selects */
+input, select {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #fbc02d;
+    box-shadow: 0 0 5px rgba(251, 192, 45, 0.5);
+}
+
+/* --- Vehicle Selection (Step 1) --- */
+.vehicle-options {
+    display: grid;
+    /* Use auto-fit to allow for wider cards on a wider screen */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px; /* Increased gap */
+    margin-top: 10px;
+}
+
+.vehicle-card {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px 10px; /* Increased padding */
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.vehicle-card:hover {
+    border-color: #fbc02d;
+    transform: translateY(-2px);
+}
+
+.vehicle-card.selected {
+    border-color: #fbc02d;
+    background: #fff8e1;
+    box-shadow: 0 0 10px rgba(251, 192, 45, 0.2);
+}
+
+.vehicle-icon {
+    font-size: 32px; /* Increased icon size */
+    margin-bottom: 8px; /* Increased margin */
+}
+
+.vehicle-name {
+    font-size: 16px; /* Increased font size */
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.vehicle-price {
+    font-size: 14px; /* Increased font size */
+    color: #666;
+}
+
+/* --- Taxi Card Styles (Step 2) --- */
+.taxi-options-list {
+    /* Allow min width of 450px for each column on a wider screen */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); /* Responsive grid for wide screen */
+    gap: 20px; /* Increased gap */
+    margin-top: 10px;
+}
+
+.taxi-card {
+    display: flex;
+    align-items: center;
+    padding: 20px 25px; /* Increased padding */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background-color: #fafafa;
+}
+
+.taxi-card:hover {
+    border-color: #fbc02d;
+    background-color: #fffde7;
+}
+
+.taxi-card.selected-taxi {
+    border: 2px solid #ff8f00;
+    background-color: #fff3cd;
+    box-shadow: 0 0 10px rgba(255, 143, 0, 0.3);
+    transform: scale(1.01);
+}
+
+.taxi-details {
+    flex-grow: 1;
+}
+
+.driver-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 18px; /* Increased font size */
+}
+
+.car-info {
+    font-size: 15px; /* Increased font size */
+    color: #666;
+}
+
+/* --- Seat Selection Styles (Step 3) - IMPROVED --- */
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.legend-available {
+    background-color: #4CAF50;
+}
+
+.legend-selected {
+    background-color: #ff8f00;
+}
+
+.legend-booked {
+    background-color: #ffcccc;
+}
+
+.legend-window {
+    background-color: #e8f5e9;
+    border: 1px solid #4CAF50;
+}
+
+.seat-options-grid {
+    /* Use 5 columns for better layout on a wider screen */
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.seat-card {
+    padding: 20px 10px; /* Increased padding */
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px; /* Increased font size */
+    background-color: #f7f7f7;
+    position: relative;
+    line-height: 1.2;
+}
+
+/* Custom styling for window seats for better visual cue */
+.seat-card.window-seat {
+    border-color: #4CAF50; /* Green border for window seats */
+    background-color: #e8f5e9; /* Light green background */
+}
+
+.seat-card.available {
+    background-color: #e8f5e9;
+    border-color: #4CAF50;
+    color: #2e7d32;
+}
+
+.seat-card.unavailable {
+    background-color: #ffcccc;
+    border-color: #c0392b;
+    color: #c0392b;
+    cursor: not-allowed;
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.seat-card.selected-seat {
+    border-color: #ff8f00;
+    background-color: #fff3cd;
+    box-shadow: 0 0 5px rgba(255, 143, 0, 0.5);
+    color: #333;
+    transform: translateY(-2px);
+}
+
+/* Style for the seat selection header details */
+#seat-selection-label {
+    font-size: 18px; /* Increased font size */
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 600;
+}
+#seat-selection-label strong {
+    color: #ff8f00;
+    font-size: 20px; /* Increased font size */
+}
+
+/* --- Payment Selection Styles (Step 4) --- */
+#payment-selection-section {
+    display: none;
+    padding: 50px; /* Increased padding */
+    text-align: center;
+}
+
+.payment-title {
+    font-size: 32px; /* Increased font size */
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 40px; /* Increased margin */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-title span {
+    margin-left: 15px; /* Increased margin */
+    font-size: 36px; /* Increased font size */
+}
+
+.payment-options-grid {
+    display: flex;
+    flex-direction: row; /* Horizontal layout for wide screen */
+    gap: 30px; /* Increased gap */
+    justify-content: center;
+}
+
+.payment-card {
+    background-color: #fbc02d;
+    color: #333;
+    border-radius: 15px;
+    width: 300px; /* Increased fixed width for payment cards */
+    height: 90px; /* Increased height */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .payment-options-grid {
+        flex-direction: column; /* Stack vertically on mobile */
+    }
+    .payment-card {
+        width: 100%;
+    }
+}
+
+.payment-card:hover {
+    background-color: #ff8f00;
+    transform: scale(1.02);
+    color: white;
+}
+
+.payment-card-text {
+    font-size: 20px; /* Increased font size */
+    font-weight: 700;
+    margin-left: 15px;
+}
+
+.payment-card-icon {
+    font-size: 36px; /* Increased font size */
+}
+
+/* --- Button & Confirmation Styles --- */
+.btn-book {
+    width: 100%;
+    padding: 18px; /* Increased padding */
+    background: linear-gradient(135deg, #fbc02d 0%, #ff8f00 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px; /* Increased font size */
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 30px; /* Increased margin */
+    transition: transform 0.2s;
+    grid-column: 1 / -1; /* Make button span full width */
+}
+
+.btn-book:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(251, 192, 45, 0.6);
+}
+
+.btn-book:active {
+    transform: translateY(0);
+}
+
+.confirmation {
+    display: none;
+    padding: 50px; /* Increased padding */
+    text-align: center;
+}
+
+.confirmation.show {
+    display: block;
+}
+
+.confirmation-icon {
+    font-size: 70px; /* Increased icon size */
+    color: #4caf50;
+    margin-bottom: 20px;
+}
+
+.confirmation h2 {
+    color: #333;
+    font-size: 24px; /* Increased font size */
+    margin-bottom: 15px;
+}
+
+.confirmation p {
+    color: #666;
+    font-size: 16px; /* Increased font size */
+    margin-bottom: 25px;
+}
+
+.btn-new {
+    padding: 14px 40px; /* Increased padding */
+    background: #fbc02d;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px; /* Increased font size */
+    transition: background 0.2s;
+}
+.btn-new:hover {
+    background: #ff8f00;
+}
+
+/* Custom Error Message Styling */
+.error-message {
+    color: #c0392b;
+    background-color: #fdeaea;
+    border: 1px solid #c0392b4d;
+    padding: 15px; /* Increased padding */
+    border-radius: 8px;
+    margin-top: 20px; /* Increased margin */
+    display: none;
+    font-size: 16px; /* Increased font size */
+    font-weight: 500;
+    text-align: center;
+    grid-column: 1 / -1; /* Make error message span full width */
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Ride Easy!</title>
+    
+    <!-- External Dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Local Styles -->
+    <link rel="stylesheet" href="../CSS/profile.css">
+</head>
+<body>
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar-section">
+                <div class="profile-avatar" id="profile-avatar">
+                    RB
+                </div>
+                <button class="change-photo-btn" id="change-photo-btn">
+                    <i class="fa-solid fa-camera"></i>
+                    Change Photo
+                </button>
+            </div>
+            <div class="profile-basic-info">
+                <h1 id="display-name">Dorji</h1>
+                <p class="profile-subtitle">Ride Easy Passenger</p>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">24</span>
+                        <span class="stat-label">Total Rides</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">48</span>
+                        <span class="stat-label">Total spends</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="profile-content">
+            <div class="section-header">
+                <h2>Personal Information</h2>
+                <button class="edit-btn" id="edit-profile-btn">
+                    <i class="fa-solid fa-edit"></i>
+                    Edit Profile
+                </button>
+            </div>
+
+            <form class="profile-form" id="profile-form">
+                <!-- Personal Details -->
+                <div class="form-section">
+                    <h3>Basic Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="full-name">Full Name *</label>
+                            <input type="text" id="full-name" name="fullName" value="Dorji" required disabled>
+                            <span class="error-message" id="name-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender *</label>
+                            <select id="gender" name="gender" required disabled>
+                                <option value="">Select Gender</option>
+                                <option value="he">He/Him</option>
+                                <option value="she">She/Her</option>
+                                <option value="they">They/Them</option>
+                            </select>
+                            <span class="error-message" id="gender-error"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="form-section">
+                    <h3>Contact Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cid">CID Number *</label>
+                            <input type="text" id="cid" name="cid" value="10811002763" maxlength="11" placeholder="Enter 11-digit CID" required disabled>
+                            <span class="error-message" id="cid-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" value="" placeholder="17XXXXXX or 77XXXXXX" required disabled>
+                            <span class="error-message" id="phone-error"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" value="" placeholder="your.email@example.com (optional)" disabled>
+                            <span class="error-message" id="email-error"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact -->
+                <div class="form-section">
+                    <h3>Emergency Contact</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="emergency-name">Contact Name *</label>
+                            <input type="text" id="emergency-name" name="emergencyName" value="" placeholder="Emergency contact name" required disabled>
+                            <span class="error-message" id="emergency-name-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="emergency-phone">Contact Phone *</label>
+                            <input type="tel" id="emergency-phone" name="emergencyPhone" value="" placeholder="17XXXXXX or 77XXXXXX" required disabled>
+                            <span class="error-message" id="emergency-phone-error"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="emergency-relation">Relationship *</label>
+                            <select id="emergency-relation" name="emergencyRelation" required disabled>
+                                <option value="">Select Relationship</option>
+                                <option value="parent">Parent</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="spouse">Spouse</option>
+                                <option value="friend">Friend</option>
+                                <option value="relative">Relative</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <span class="error-message" id="emergency-relation-error"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences -->
+                <div class="form-section">
+                    <h3>Ride Preferences</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="preferred-language">Preferred Language</label>
+                            <select id="preferred-language" name="preferredLanguage" disabled>
+                                <option value="dzongkha">Dzongkha</option>
+                                <option value="english" selected>English</option>
+                                <option value="nepali">Nepali</option>
+                                <option value="hindi">Hindi</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="music-preference">Music Preference</label>
+                            <select id="music-preference" name="musicPreference" disabled>
+                                <option value="any" selected>Any</option>
+                                <option value="local">Local Music</option>
+                                <option value="bollywood">Bollywood</option>
+                                <option value="english">English</option>
+                                <option value="none">No Music</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="ac-preference" name="acPreference" disabled>
+                                <span class="checkmark"></span>
+                                Prefer Air Conditioned vehicles
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="quiet-ride" name="quietRide" disabled>
+                                <span class="checkmark"></span>
+                                Prefer quiet rides
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions" id="form-actions" style="display: none;">
+                    <button type="button" class="cancel-btn" id="cancel-btn">
+                        <i class="fa-solid fa-times"></i>
+                        Cancel
+                    </button>
+                    <button type="submit" class="save-btn" id="save-btn">
+                        <i class="fa-solid fa-save"></i>
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hidden file input for photo upload -->
+    <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+
+    <!-- Success/Error Messages -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <!-- Local JavaScript -->
+    <script src="../JAVA/profile.js"></script>
+</body>
+</html>

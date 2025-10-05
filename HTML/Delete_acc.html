@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account - RideEasy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Background image styling - consistent with other pages */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('../IMAGE/chinese-clouds-symbol-grace-vector-50202250.jpg') center/cover fixed;
+            filter: blur(6px);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .delete-interface {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 550px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #fbc02d;
+            padding: 40px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: absolute;
+            left: 50px;
+        }
+        .back-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateX(-5px) scale(1.05);
+        }
+        .back-btn::before {
+            content: '←';
+            font-size: 22px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .title {
+            font-size: 30px;
+            color: white;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .trash-icon {
+            font-size: 28px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .warning-box {
+            background-color: #ffebee; /* Light Red */
+            color: #c62828; /* Dark Red */
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #d32f2f;
+            font-size: 15px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            color: #334155;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #333;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input[type="password"]:focus {
+            border-color: #ef4444; /* Red focus for danger */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+        }
+        
+        .delete-btn {
+            width: 100%;
+            background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Message Box Styling (for success/error) */
+        .message-box {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .message-box.success {
+            background-color: #e8f5e8; /* Light Green */
+            color: #2e7d32; /* Dark Green */
+            border: 1px solid #c8e6c9;
+        }
+
+        .message-box.error {
+            background-color: #ffebee; /* Light Red */
+            color: #c62828; /* Dark Red */
+            border: 1px solid #ffcdd2;
+        }
+        
+        .message-box.show {
+            display: block;
+            opacity: 1;
+        }
+
+        /* --- Custom Modal Pop-up Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .modal-overlay.open .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 1.8em;
+            color: #dc2626; /* Red for deletion warning */
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .modal-content p {
+            margin-bottom: 10px;
+            color: #444;
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.2s;
+            border: none;
+            flex-grow: 1;
+        }
+        .modal-btn.delete {
+            background-color: #dc2626;
+            color: white;
+        }
+        .modal-btn.delete:hover {
+            background-color: #b91c1c;
+            transform: translateY(-1px);
+        }
+        .modal-btn.cancel {
+            background-color: #f1f1f1;
+            color: #444;
+        }
+        .modal-btn.cancel:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-1px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .delete-interface { border-radius: 15px; max-width: 100%; }
+            .header {
+                padding: 25px 20px;
+                text-align: center;
+            }
+            .back-btn { position: absolute; left: 20px; top: 20px; }
+            .title { font-size: 24px; }
+            .content { padding: 30px 20px; }
+            .warning-box { padding: 15px; font-size: 14px; }
+            .form-group input { padding: 12px 15px; }
+            .delete-btn { padding: 16px 25px; font-size: 16px; }
+            .modal-box { padding: 25px; max-width: 350px; }
+        }
+
+        @media (max-width: 480px) {
+            .header { padding: 20px 15px; }
+            .back-btn { width: 40px; height: 40px; left: 15px; top: 15px; }
+            .title { font-size: 22px; }
+            .content { padding: 20px 15px; }
+            .modal-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="delete-interface">
+            <div class="header">
+                <button class="back-btn" onclick="goBack()"></button>
+                <h1 class="title">
+                    <span class="trash-icon">🗑️</span>
+                    Delete Account
+                </h1>
+            </div>
+            
+            <div class="content">
+                <div id="message-box" class="message-box"></div>
+
+                <div class="warning-box">
+                    ⚠️ **WARNING:** Deleting your account is permanent. All ride history, saved locations, and personal data will be immediately and irreversibly removed. This action cannot be undone.
+                </div>
+
+                <form id="delete-account-form">
+                    <div class="form-group">
+                        <label for="password-confirm">Confirm your Password to proceed</label>
+                        <input type="password" id="password-confirm" required minlength="6">
+                    </div>
+                    
+                    <button type="submit" class="delete-btn">
+                        I Understand, Delete My Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal/Pop-up Structure for Confirmation -->
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h2 id="modal-title" class="modal-title"></h2>
+            <div id="modal-content" class="modal-content">
+                <!-- Content injected here -->
+            </div>
+            <div id="modal-actions" class="modal-actions">
+                <!-- Buttons injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('delete-account-form');
+        const msgBox = document.getElementById('message-box');
+        const modalOverlay = document.getElementById('custom-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const modalActions = document.getElementById('modal-actions');
+
+        /**
+         * Clears and hides the custom modal.
+         */
+        function hideModal() {
+            modalOverlay.classList.remove('open');
+            modalTitle.textContent = '';
+            modalContent.innerHTML = '';
+            modalActions.innerHTML = '';
+            // Remove the event listener from the overlay to prevent leaks
+            modalOverlay.removeEventListener('click', handleOverlayClick);
+        }
+
+        /**
+         * Generic function to show a custom pop-up modal.
+         */
+        function showModal(title, htmlContent, buttons) {
+            modalTitle.textContent = title;
+            modalContent.innerHTML = htmlContent;
+            modalActions.innerHTML = '';
+
+            buttons.forEach(btnConfig => {
+                const button = document.createElement('button');
+                button.textContent = btnConfig.text;
+                button.className = `modal-btn ${btnConfig.className}`;
+                button.addEventListener('click', () => {
+                    // Execute the action and then hide the modal
+                    btnConfig.action();
+                    hideModal();
+                });
+                modalActions.appendChild(button);
+            });
+
+            // Add listener to close modal if overlay is clicked
+            modalOverlay.addEventListener('click', handleOverlayClick);
+            
+            modalOverlay.classList.add('open');
+        }
+
+        /**
+         * Handles clicks on the modal overlay to close it.
+         */
+        function handleOverlayClick(event) {
+            // Only close if the click is directly on the overlay, not the box
+            if (event.target === modalOverlay) {
+                hideModal();
+            }
+        }
+        
+        /**
+         * Displays a message in the custom message box.
+         * @param {string} message - The message text.
+         * @param {string} type - 'success' or 'error'.
+         */
+        function showMessage(message, type) {
+            msgBox.textContent = message;
+            msgBox.className = `message-box show ${type}`;
+            
+            // Hide the message after 5 seconds
+            setTimeout(() => {
+                msgBox.classList.remove('show');
+                setTimeout(() => {
+                    msgBox.className = 'message-box';
+                }, 500); 
+            }, 5000);
+        }
+
+        /**
+         * Functionality for the back button.
+         */
+        function goBack() {
+            window.history.back();
+        }
+
+        /**
+         * Simulates the irreversible account deletion process.
+         */
+        function executeDeletion() {
+            // In a real application, this would be a final, secure API call
+            console.log('Final deletion confirmation received. Executing deletion...');
+
+            // *** SIMULATED DELETION LOGIC ***
+            setTimeout(() => {
+                showMessage("Your account has been successfully deleted. Goodbye!", 'success');
+                form.reset();
+                
+                // Redirect the user to a login/welcome page after deletion
+                setTimeout(() => {
+                    // window.location.href = 'welcome_page.html'; // Simulate redirection
+                    console.log("Redirecting to welcome page...");
+                }, 3000); 
+                
+            }, 1500); // Simulate 1.5 second API response time
+        }
+
+        /**
+         * Handles the form submission to initiate the account deletion process,
+         * first checking the password, then launching the confirmation modal.
+         */
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const passwordConfirm = document.getElementById('password-confirm').value;
+
+            // *** SIMULATED PASSWORD CHECK ***
+            // In a real app, this password would be verified securely on the server.
+            if (passwordConfirm.length < 6) { 
+                 showMessage("Please enter your current password to confirm.", 'error');
+                 return;
+            }
+            if (passwordConfirm !== "secret123") { // Using a mock password for demonstration
+                // In a real scenario, the server would return a failed auth.
+                // For this simulation, we assume any non-empty password over 6 chars is "valid" for the demo, 
+                // unless it is a specific error case.
+            }
+            // *** END SIMULATED PASSWORD CHECK ***
+
+            const content = `
+                <p style="font-weight: 600;">This is your final warning.</p>
+                <p>Are you absolutely sure you want to delete your RideEasy account? All data will be lost.</p>
+            `;
+            
+            const buttons = [
+                { 
+                    text: 'Keep Account', 
+                    className: 'cancel', 
+                    action: () => { console.log('Deletion cancelled by user.'); } 
+                },
+                { 
+                    text: 'DELETE PERMANENTLY', 
+                    className: 'delete', 
+                    action: executeDeletion 
+                }
+            ];
+
+            showModal('Confirm Account Deletion', content, buttons);
+        });
+
+        // Add touch feedback for mobile interaction
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.delete-btn, .back-btn').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

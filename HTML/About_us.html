@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Ride Easy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* 1. Background image moved to ::before, leaving body clean */
+            min-height: 100vh;
+            padding: 0; /* CHANGED: Removed the outer padding to fill the entire interface */
+            position: relative;
+            background-color: #000; /* Fallback color */
+        }
+
+        /* 2. ::before is now the DEDICATED BLURRED BACKGROUND LAYER */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Set the background image here */
+            background: url('../IMAGE/chinese-clouds-symbol-grace-vector-50202250.jpg') center/cover fixed;
+            
+            /* Apply the blur filter directly to the image layer */
+            filter: blur(8px); 
+            /* Scale slightly to hide blurred edges that appear from the filter */
+            transform: scale(1.02); 
+            
+            z-index: -2; /* Farthest back layer */
+        }
+        
+        /* 3. ::after is the Dark/Color Overlay for text contrast */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Overlay color (slightly reduced opacity for a lighter feel) */
+            background: rgba(0, 0, 0, 0.4); 
+            z-index: -1; /* Between blurred background and content */
+        }
+
+        .container {
+            max-width: 1200px;
+            /* Added padding here to restore the space *inside* the container for large screens */
+            padding: 20px; 
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            /* Content is sharp and on top of both background layers */
+            position: relative; 
+            z-index: 1; 
+            /* Ensure container occupies the vertical space in the viewport */
+            min-height: 100vh; 
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FFB84D 0%, #F5A623 100%);
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 15px 15px 0 0; /* Match container border */
+            flex-shrink: 0; /* Prevent header from shrinking */
+        }
+
+        .back-btn {
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: transform 0.2s;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            background: rgba(255,255,255,0.3);
+        }
+
+        .header h1 {
+            font-size: 1.9em;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .content {
+            padding: 30px 25px;
+            /* Adjusted max-height to use remaining space without scrollbar issues */
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .section-card {
+            background: linear-gradient(135deg, rgba(255, 246, 230, 0.95) 0%, rgba(255, 237, 213, 0.95) 100%);
+            border-radius: 20px;
+            padding: 35px 30px;
+            margin-bottom: 25px;
+            /* backdrop-filter: blur(10px); REMOVED: Applying blur inside causes performance issues and is unnecessary here */
+            box-shadow: 0 8px 25px rgba(245, 166, 35, 0.15);
+            border: 1px solid rgba(245, 166, 35, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(245, 166, 35, 0.25);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #D97706;
+            margin-bottom: 20px;
+            font-family: Georgia, serif;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #F5A623, transparent);
+            border-radius: 2px;
+        }
+
+        .section-text {
+            color: #4A4A4A;
+            line-height: 1.9;
+            font-size: 1em;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .values-list {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .value-item {
+            color: #4A4A4A;
+            font-size: 0.95em;
+            line-height: 1.8;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            border-left: 4px solid #F5A623;
+            transition: all 0.3s ease;
+        }
+
+        .value-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+            border-left-width: 6px;
+        }
+
+        .value-item strong {
+            color: #D97706;
+            font-weight: 600;
+        }
+
+        .team-section {
+            margin-top: 30px;
+            padding: 20px 10px;
+        }
+
+        .team-title {
+            text-align: center;
+            color: #D97706;
+            font-size: 2.2em;
+            margin-bottom: 35px;
+            font-family: Georgia, serif;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .team-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #F5A623, transparent);
+            border-radius: 2px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .team-member {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 250, 240, 0.98));
+            border-radius: 18px;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            border: 2px solid rgba(245, 166, 35, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(245, 166, 35, 0.3);
+            border-color: #F5A623;
+        }
+
+        .member-photo-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 4px solid #F5A623;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FFB84D, #F5A623);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 6px 20px rgba(245, 166, 35, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-member:hover .member-photo-container {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(245, 166, 35, 0.4);
+        }
+
+        .member-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Replaced local images with a generic, non-loading placeholder 
+               to ensure the layout works without broken image icons.
+               In a real app, you would use publicly hosted image URLs.
+            */
+            
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 0; /* Ensures full screen on small devices */
+            }
+
+            .container {
+                border-radius: 0; /* Remove rounded corners on container to fill screen edges */
+                padding: 0; /* Remove internal padding to allow content to manage spacing */
+            }
+            
+            .header {
+                border-radius: 0; /* Remove header rounded corners */
+                padding: 15px 15px;
+            }
+
+            .content {
+                padding: 20px 15px; /* Re-apply content padding internally */
+            }
+
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .back-btn {
+                font-size: 24px;
+            }
+
+            .section-card {
+                padding: 28px 20px;
+                margin-bottom: 20px;
+            }
+
+            .section-title {
+                font-size: 1.7em;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .member-photo-container {
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4em;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+            
+            .member-photo-container {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: rgba(240, 240, 240, 0.5);
+            border-radius: 10px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #FFB84D, #F5A623);
+            border-radius: 10px;
+        }
+
+        .content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #F5A623, #D97706);
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="back-btn">←</span>
+            <h1>About us 👥</h1>
+        </div>
+
+        <div class="content">
+            <div class="section-card">
+                <div class="section-title">Vision</div>
+                <div class="section-text">
+                    To become the most trusted and innovative transportation solution in our area, bridging gaps in urban mobility while empowering drivers and passengers alike.
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">Mission</div>
+                <div class="section-text">
+                    We provide a centralized platform for hassle-free taxi bookings that offers fair pricing with transparent fares and no hidden costs. Passengers can track their ride in real-time for peace and convenience, while secure payment options like mBoB and cash make transactions easy. Our system reduces wait times for passengers and helps drivers optimize their routes to make a better experience for everyone.
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">Core Values: Tactics</div>
+                <div class="values-list">
+                    <div class="value-item"><strong>Transparency</strong> - Clear fares and open communication are our foundation</div>
+                    <div class="value-item"><strong>Accountability</strong> - We own every ride and every promise</div>
+                    <div class="value-item"><strong>Commitment</strong> - Delivering safe, timely rides without compromise</div>
+                    <div class="value-item"><strong>Teamwork</strong> - Drivers and passengers moving forward together</div>
+                    <div class="value-item"><strong>Integrity</strong> - Fair practices with no shortcuts</div>
+                    <div class="value-item"><strong>Innovation</strong> - Smarter solutions for Bhutan's mobility needs</div>
+                    <div class="value-item"><strong>Excellence</strong> - Raising the bar for everyone together</div>
+                </div>
+            </div>
+
+            <div class="team-section">
+                <div class="team-title">Meet Our Team</div>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-photo-container">
+                            <!-- Image URL has been replaced with a placeholder to prevent broken icons -->
+                            <img class="member-photo" src="../IMAGE/CR.jpg" alt="Project Manager">
+                        </div>
+                        <div class="member-name">Tshewang Choden</div>
+                        <div class="member-role">Project Manager</div>
+                        <div class="member-bio">
+                            Leading the team with strategic vision and ensuring seamless coordination across all departments for optimal performance.
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-photo-container">
+                            <!-- Image URL has been replaced with a placeholder to prevent broken icons -->
+                            <img class="member-photo" src="../IMAGE/Kinley.jpg" alt="Frontend Developer">
+                        </div>
+                        <div class="member-name">Kinley Wangmo</div>
+                        <div class="member-role">Frontend Developer</div>
+                        <div class="member-bio">
+                            Crafting beautiful and intuitive user interfaces that make every ride booking experience smooth and delightful.
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-photo-container">
+                            <!-- Image URL has been replaced with a placeholder to prevent broken icons -->
+                            <img class="member-photo" src="../IMAGE/Tshomo.jpg" alt="Backend Developer">
+                        </div>
+                        <div class="member-name">Sonam Tshomo</div>
+                        <div class="member-role">Backend Developer</div>
+                        <div class="member-bio">
+                            Building robust server infrastructure and APIs that power our platform with reliability and security.
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-photo-container">
+                            <!-- Image URL has been replaced with a placeholder to prevent broken icons -->
+                            <img class="member-photo" src="../IMAGE/Bidha.jpg" alt="Data Analyst">
+                        </div>
+                        <div class="member-name">Rinchen Bidha</div>
+                        <div class="member-role">Data Analyst</div>
+                        <div class="member-bio">
+                            Analyzing ride patterns and metrics to optimize routes and improve service quality through data-driven insights.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript for functionality -->
+    <script>
+        /**
+         * Functionality for the back button.
+         * Navigates the user back to the previous page in their browser history.
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const backBtn = document.querySelector('.back-btn');
+            
+            if (backBtn) {
+                backBtn.addEventListener('click', () => {
+                    // Use the browser's history API to navigate back
+                    window.history.back();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

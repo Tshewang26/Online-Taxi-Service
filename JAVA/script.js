@@ -1,95 +1,110 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const searchInput = document.querySelector('.search-bar input');
-  const listItems = document.querySelectorAll('.price-item');
+document.addEventListener("DOMContentLoaded", () => {
+  // Sidebar toggle
+  const menuToggle = document.getElementById("menu-toggle");
+  const sidebar = document.querySelector(".sidebar");
 
-  const profileIconDiv = document.getElementById('profile-icon');
-  const userNameDisplay = document.getElementById('user-name');
-  const userCidDisplay = document.getElementById('user-cid');
-
-  const profileModal = document.getElementById('profile-modal');
-  const editNameInput = document.getElementById('edit-name');
-  const editCidInput = document.getElementById('edit-cid');
-  const saveBtn = document.querySelector('.modal-actions .save-btn');
-  const cancelBtn = document.querySelector('.modal-actions .cancel-btn');
-  const cidErrorMessage = document.getElementById('cid-error-message');
-
-  const pfpIcon = document.getElementById('pfp-icon');
-  const pfpImage = document.getElementById('pfp-image');
-  const pfpFileInput = document.getElementById('pfp-file-input');
-
-  // Show modal
-  const showModal = () => {
-    profileModal.style.display = 'flex';
-    editNameInput.value = userNameDisplay.textContent;
-    editCidInput.value = userCidDisplay.textContent.replace('CID: ', '');
-    cidErrorMessage.textContent = '';
-  };
-
-  // Search function
-  searchInput.addEventListener('keyup', (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    listItems.forEach(item => {
-      const destination = item.querySelector('.price-item-info span').textContent.toLowerCase();
-      item.style.display = destination.includes(searchTerm) ? 'flex' : 'none';
+  if (menuToggle && sidebar) {
+    menuToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
     });
-  });
+  }
 
-  // Nav toggle
-  const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-  navItems.forEach(item => {
-    item.addEventListener('click', function() {
-      navItems.forEach(i => i.classList.remove('active-nav'));
-      this.classList.add('active-nav');
+  // --- Destination Search ---
+  const searchInput = document.getElementById("destination-search");
+  const destinationList = document.getElementById("destination-list");
+  if (searchInput && destinationList) {
+    const destinationItems = destinationList.querySelectorAll(".destination-item");
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      destinationItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? "flex" : "none";
+      });
     });
-  });
+  }
 
-  // Open modal on click
-  profileIconDiv.addEventListener('click', showModal);
-  userNameDisplay.addEventListener('click', showModal);
-  userCidDisplay.addEventListener('click', showModal);
+  // --- Profile Modal ---
+  const profileTrigger = document.getElementById("sidebar-profile-trigger");
+  const modal = document.getElementById("edit-profile-modal");
+  const modalCloseBtn = document.getElementById("modal-close-btn");
+  const cancelBtn = document.getElementById("modal-cancel-btn");
+  const saveBtn = document.getElementById("modal-save-btn");
 
-  // Cancel button closes modal
-  cancelBtn.addEventListener('click', () => {
-    profileModal.style.display = 'none';
-  });
+  const nameInput = document.getElementById("modal-user-name");
+  const idInput = document.getElementById("modal-user-id");
+  const idError = document.getElementById("id-error");
 
-  // Close modal if clicked outside
-  profileModal.addEventListener('click', (e) => {
-    if (e.target === profileModal) {
-      profileModal.style.display = 'none';
-    }
-  });
+  const userName = document.getElementById("user-name");
+  const userId = document.getElementById("user-id");
 
-  // Upload profile picture
-  pfpFileInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        pfpImage.src = e.target.result;
-        pfpImage.style.display = 'block';
-        pfpIcon.style.display = 'none';
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+  // Avatar handling
+  const avatar = document.getElementById("user-avatar");
+  const modalAvatar = document.getElementById("modal-avatar-preview-lg");
+  const fileUploadInput = document.getElementById("file-upload-input");
 
-  // Save button
-  saveBtn.addEventListener('click', () => {
-    const newName = editNameInput.value.trim();
-    const newCid = editCidInput.value.trim();
+  if (profileTrigger) {
+    profileTrigger.addEventListener("click", () => {
+      modal.style.display = "flex";
+    });
+  }
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
 
-    const cidRegex = /^\d{11}$/;
-    if (!cidRegex.test(newCid)) {
-      cidErrorMessage.textContent = 'CID must be exactly 11 numbers.';
-      return;
-    }
+  // Avatar click to upload
+  if (modalAvatar && fileUploadInput) {
+    modalAvatar.addEventListener("click", () => fileUploadInput.click());
+    fileUploadInput.addEventListener("change", () => {
+      const file = fileUploadInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          avatar.style.backgroundImage = `url(${e.target.result})`;
+          avatar.textContent = "";
+          modalAvatar.style.backgroundImage = `url(${e.target.result})`;
+          modalAvatar.textContent = "";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
 
-    cidErrorMessage.textContent = '';
+  // Save profile changes
+  if (saveBtn) {
+    saveBtn.addEventListener("click", () => {
+      const nameValue = nameInput.value.trim();
+      const idValue = idInput.value.trim();
 
-    if (newName) userNameDisplay.textContent = newName;
-    if (newCid) userCidDisplay.textContent = `CID: ${newCid}`;
+      // Validate CID
+      if (!/^\d{11}$/.test(idValue)) {
+        idError.style.display = "block";
+        return;
+      } else {
+        idError.style.display = "none";
+      }
 
-    profileModal.style.display = 'none';
-  });
+      // Update profile
+      if (userName) userName.textContent = nameValue;
+      if (userId) userId.textContent = `CID: ${idValue}`;
+
+      modal.style.display = "none";
+    });
+  }
+
+  // Close modal when clicking outside
+  if (modal) {
+    modal.addEventListener("click", e => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
 });

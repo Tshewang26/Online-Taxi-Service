@@ -3,65 +3,903 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ride Easy!</title>
-    
+    <title>Ride Easy! Dashboard</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Font: Pacifico (for the logo title - script font) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@100..900&display=swap">
     <style>
-        body {
-            background-color: #FFD700; /* This is a light yellow color */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh; /* This makes the container take up the full viewport height */
+        /* Basic Reset and Styles using direct color codes (No root variables) */
+        * {
+            box-sizing: border-box;
             margin: 0;
-            font-family: sans-serif;
-            border: 5px solid #FFD700; /* Added the blue border as seen in the image */
-            box-sizing: border-box; /* Ensures the border is included in the element's total width and height */
+            padding: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            border-radius: 4px; /* Apply rounded corners everywhere */
+        }
+
+        body {
+            /* light-gray-bg: #f4f4f7 */
+            background-color: #f4f4f7;
         }
 
         .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --------------------
+           Sidebar Styling
+           -------------------- */
+        .sidebar {
+            width: 250px;
+            /* primary-yellow: #ffd65c */
+            background-color: #ffd65c;
+            padding: 20px 0;
+            /* dark-text: #333 */
+            color: #333;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+            /* Ensure the sidebar stays on top of content when collapsed/fixed */
+            z-index: 1500; 
+        }
+
+        .user-profile {
+            padding: 0 20px 30px;
             text-align: center;
         }
 
-        .logo-container {
-            width: 200px; /* Adjust this size as needed */
-            height: 200px; /* Adjust this size as needed */
-            margin-bottom: 20px; /* Adds space between the logo and the text */
-            animation: pop-up 0.8s ease-in-out; /* Apply the animation */
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background-color: transparent;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            /* dark-text: #333 */
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border 0.2s ease-in-out;
+            line-height: 80px; 
+            text-align: center;
+        }
+        
+        .user-profile .editable {
+            cursor: pointer;
+            transition: opacity 0.1s ease;
+        }
+        .user-profile .editable:hover {
+            opacity: 0.8;
         }
 
-        #logo {
+        .user-info .id {
+            font-size: 12px;
+            /* light-text: #666 */
+            color: #666;
+        }
+
+        .navigation ul {
+            list-style: none;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .nav-item i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-item.active {
+            background-color: #fff; 
+            margin-right: 10px;
+            border-radius: 5px 0 0 5px; 
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --------------------
+           Main Content Styling
+           -------------------- */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            position: relative;
+            padding: 10px 0 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: default; 
+        }
+        
+        /* Styling for the new static logo icon (Taxi) */
+        .logo-icon {
+            font-size: 18px; 
+            /* dark-text: #333 */
+            color: #333; 
+            /* primary-yellow: #ffd65c */
+            background-color: #ffd65c;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 28px; 
+            font-weight: normal;
+            /* Script font matching the image aesthetic */
+            font-family: 'Pacifico', cursive; 
+        }
+
+        .header-icons {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Styling for all icons in the header */
+        .header-icons i {
+            font-size: 20px;
+            /* light-text: #666 */
+            color: #666;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        
+        .header-icons i:last-child {
+            margin-right: 0;
+        }
+
+        /* --------------------
+           Search Bar
+           -------------------- */
+        .search-bar-container {
+            padding-bottom: 30px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-bar input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding-right: 10px;
+            background: transparent;
+        }
+
+        .search-bar i {
+            /* light-text: #666 */
+            color: #666;
+            cursor: pointer;
+        }
+
+        /* --------------------
+           Destination List
+           -------------------- */
+        .price-header-banner {
+            /* primary-yellow: #ffd65c */
+            background-color: #ffd65c;
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .destination-list {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px 0;
+        }
+
+        .destination-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            /* border-color: #eee */
+            border-bottom: 1px solid #eee;
+        }
+
+        .destination-item:last-child {
+            border-bottom: none;
+        }
+
+        .location-details {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .location-details i {
+            /* map-pin-color: #ffd65c */
+            color: #ffd65c;
+            margin-right: 10px;
+        }
+
+        .price {
+            font-weight: bold;
+            /* dark-text: #333 */
+            color: #333;
+        }
+        
+        /* --------------------
+           Edit Profile Modal Styling
+           -------------------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            border-radius: 50%; /* This will make your image circular if it's a square */
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 0.3s ease;
         }
 
-        h1 {
-            font-family: 'Georgia', serif; /* Using a serif font to match the image */
-            font-style: italic;
-            font-size: 2.5em; /* Adjust this size as needed */
-            color: #4b4b4b; /* A dark gray color */
-            animation: pop-up 0.8s ease-in-out 0.2s; /* Apply the animation with a delay */
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            width: 90%;
+            max-width: 400px;
+            position: relative;
         }
 
-        /* The animation keyframes */
-        @keyframes pop-up {
-            0% {
-                transform: scale(0);
-                opacity: 0;
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            /* dark-text: #333 */
+            color: #333;
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            /* light-text: #666 */
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            /* dark-text: #333 */
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            /* border-color: #eee */
+            border: 1px solid #eee;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        /* Focus state with subtle shadow */
+        .form-group input:focus {
+            outline: none;
+            /* primary-yellow: #ffd65c */
+            border-color: #ffd65c;
+            /* Calculated transparent yellow shadow */
+            box-shadow: 0 0 0 3px rgba(255, 214, 92, 0.5); 
+        }
+        
+        /* Error state styling for input */
+        .form-group input.error {
+            /* error-red: #e3342f */
+            border-color: #e3342f;
+            /* Calculated transparent error-red shadow */
+            box-shadow: 0 0 0 2px rgba(227, 52, 47, 0.3);
+        }
+
+        .form-group .error-message {
+            /* error-red: #e3342f */
+            color: #e3342f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .modal-buttons .save-btn {
+            /* primary-yellow: #ffd65c */
+            background-color: #ffd65c;
+            /* dark-text: #333 */
+            color: #333;
+        }
+
+        .modal-buttons .save-btn:hover {
+            background-color: #e6c245; /* Slightly darker yellow on hover */
+            transform: translateY(-1px);
+        }
+
+        .modal-buttons .cancel-btn {
+            /* light-gray-bg: #f4f4f7 */
+            background-color: #f4f4f7;
+            /* dark-text: #333 */
+            color: #333;
+            /* border-color: #eee */
+            border: 1px solid #eee;
+        }
+
+        .modal-buttons .cancel-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .modal-avatar-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-avatar-preview .avatar {
+            margin: 0;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid transparent; 
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .modal-avatar-preview .avatar:hover {
+            /* primary-yellow: #ffd65c */
+            border-color: #ffd65c;
+            opacity: 0.95;
+        }
+
+
+        .upload-label {
+            margin-top: 10px;
+            /* light-text: #666 */
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        /* Responsive Adjustments (Mobile) */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
             }
-            100% {
-                transform: scale(1);
-                opacity: 1;
+            .sidebar {
+                width: 100%;
+                padding: 10px 0;
+                order: 2; /* Move sidebar to the bottom for mobile feel */
+                position: fixed;
+                bottom: 0;
+                z-index: 1500;
+                border-radius: 0;
+            }
+            .user-profile {
+                display: none; /* Hide large profile on mobile */
+            }
+            .navigation ul {
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+            }
+            .nav-item {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 5px;
+                margin: 0;
+                border-radius: 0;
+                font-size: 12px;
+            }
+            .nav-item a {
+                font-size: 12px;
+                margin-top: 4px; /* Small gap between icon and text */
+            }
+            .nav-item i {
+                 margin-right: 0;
+            }
+            .nav-item.active {
+                background-color: transparent;
+                box-shadow: none;
+                /* map-pin-color: #ffd65c */
+                color: #ffd65c; /* Highlight active item */
+            }
+            .main-content {
+                padding: 20px 20px 70px; /* Add padding for fixed bottom sidebar */
+                order: 1;
+            }
+            .header-icons {
+                top: 20px;
+                right: 20px;
+            }
+            .modal-content {
+                margin: 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo-container">
-            <img id="logo" src="C:\Users\ASSUS\OneDrive\Pictures\download (1).png" alt="Company Logo">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <!-- Profile elements now trigger the modal -->
+                <div class="avatar editable" id="user-avatar">RB</div>
+                <div class="user-info">
+                    <p class="name editable" id="user-name">Dorji</p>
+                    <!-- CID prefix -->
+                    <p class="id editable" id="user-id">CID: 10811002763</p>
+                </div>
+                <!-- Hidden file input for PFP upload (used by the modal) -->
+                <input type="file" id="file-upload-input" accept="image/*" style="display: none;">
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li class="nav-item active" data-page="dashboard">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item" data-page="bookings">
+                        <i class="fa-solid fa-book"></i>
+                        <a href="#">Bookings</a>
+                    </li>
+                    <li class="nav-item" data-page="settings">
+                        <i class="fa-solid fa-gear"></i>
+                        <a href="#">Settings</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="header">
+                <!-- Logo Area: Static icon and script font -->
+                <div class="logo">
+                    <!-- Static taxi icon -->
+                    <i class="fa-solid fa-taxi logo-icon"></i> 
+                    <h1>Ride Easy!</h1>
+                </div>
+                <div class="header-icons">
+                    <i class="fa-regular fa-bell"></i>
+                    <!-- This icon can also trigger the modal -->
+                    <i class="fa-solid fa-user user-icon-small editable" id="user-icon-small"></i> 
+                </div>
+            </header>
+            
+            <section class="search-bar-container">
+                <div class="search-bar">
+                    <input type="text" id="destination-search" placeholder="Search a destination or taxi number...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </section>
+
+            <section class="destination-prices">
+                <div class="price-header-banner">
+                    Popular Destination Prices
+                </div>
+
+                <!-- List of Destinations -->
+                <div class="destination-list" id="destination-list">
+                    <div class="destination-item">
+                        <div class="location-details">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>White Temple</span>
+                        </div>
+                        <span class="price">Nu 200</span>
+                    </div>
+                    <div class="destination-item">
+                        <div class="location-details">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Dewathang</span>
+                        </div>
+                        <span class="price">Nu 50</span>
+                    </div>
+                    <div class="destination-item">
+                        <div class="location-details">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Samdrup Jongkhar</span>
+                        </div>
+                        <span class="price">Nu 200</span>
+                    </div>
+                    <div class="destination-item">
+                        <div class="location-details">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Gyezor temple</span>
+                        </div>
+                        <span class="price">Nu 100</span>
+                    </div>
+                    <div class="destination-item">
+                        <div class="location-details">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Hospital</span>
+                        </div>
+                        <span class="price">Nu 50</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- EDIT PROFILE MODAL -->
+        <div class="modal-overlay" id="edit-profile-modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Profile</h2>
+                    <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+                </div>
+
+                <div class="modal-avatar-preview">
+                    <!-- Current Avatar/PFP (used as a visual trigger) -->
+                    <div class="avatar" id="modal-avatar-preview-lg">RB</div>
+                    <label for="file-upload-input" class="upload-label">
+                        Click avatar to upload new picture
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="modal-user-name">Name</label>
+                    <input type="text" id="modal-user-name" value="Dorji">
+                </div>
+
+                <div class="form-group">
+                    <label for="modal-user-id">CID (11 Digits)</label>
+                    <!-- Input type kept as text for better cross-browser control over max length, but JS prevents non-numeric input -->
+                    <input type="text" id="modal-user-id" value="10811002763" maxlength="11" placeholder="Enter 11 digit CID">
+                    <!-- error-red: #e3342f -->
+                    <p class="error-message" id="id-error" style="color: #e3342f;">CID must be exactly 11 digits.</p>
+                </div>
+
+                <div class="modal-buttons">
+                    <button class="cancel-btn" id="modal-cancel-btn">Cancel</button>
+                    <button class="save-btn" id="modal-save-btn">Save Changes</button>
+                </div>
+            </div>
         </div>
-        <h1>Ride Easy!</h1>
+        <!-- END MODAL -->
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
+            const searchInput = document.getElementById('destination-search');
+            const destinationList = document.getElementById('destination-list');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            // Sidebar Profile Elements
+            const avatarSidebar = document.getElementById('user-avatar');
+            const nameSidebar = document.getElementById('user-name');
+            const idSidebar = document.getElementById('user-id');
+            const userIconSmall = document.getElementById('user-icon-small'); // Small header icon added
+
+            // Modal Elements
+            const modalOverlay = document.getElementById('edit-profile-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const modalCancelBtn = document.getElementById('modal-cancel-btn');
+            const modalSaveBtn = document.getElementById('modal-save-btn');
+            const fileInput = document.getElementById('file-upload-input');
+            const modalAvatarPreviewLg = document.getElementById('modal-avatar-preview-lg');
+            const modalUserName = document.getElementById('modal-user-name');
+            const modalUserId = document.getElementById('modal-user-id');
+            const idError = document.getElementById('id-error');
+            
+            // Store all destination items once for filtering
+            const destinationItems = Array.from(destinationList.querySelectorAll('.destination-item'));
+
+            // --- State Storage ---
+            // Store current profile data and image data URL
+            let currentProfile = {
+                name: nameSidebar.textContent,
+                // Clean up the CID prefix from initialization
+                id: idSidebar.textContent.replace('CID: ', '').trim(),
+                pfpUrl: null,
+            };
+            let tempPfpUrl = null; // Temp storage for PFP upload before save
+
+            // --- Utility Functions ---
+            
+            function updateSidebar(profile) {
+                // Update sidebar elements
+                nameSidebar.textContent = profile.name;
+                
+                // *** FIX APPLIED HERE: Corrected template literal syntax ***
+                idSidebar.textContent = `CID: ${profile.id}`; 
+                
+                const initials = profile.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                const defaultInitials = initials.substring(0, 2);
+
+                // Update avatar if URL exists
+                if (profile.pfpUrl) {
+                    avatarSidebar.style.backgroundImage = `url('${profile.pfpUrl}')`;
+                    avatarSidebar.style.backgroundSize = 'cover';
+                    avatarSidebar.style.backgroundPosition = 'center';
+                    avatarSidebar.textContent = ''; 
+                    avatarSidebar.style.lineHeight = 'normal'; 
+                } else {
+                    // Revert to initials if no PFP is set
+                    avatarSidebar.textContent = defaultInitials;
+                    avatarSidebar.style.backgroundImage = 'none';
+                    // Background remains transparent
+                    avatarSidebar.style.backgroundColor = 'transparent'; 
+                    avatarSidebar.style.lineHeight = '80px'; 
+                }
+            }
+
+            function openModal() {
+                // Load current profile data into modal inputs
+                modalUserName.value = currentProfile.name;
+                modalUserId.value = currentProfile.id;
+                
+                // Clear error state on opening
+                idError.style.display = 'none';
+                modalUserId.classList.remove('error'); 
+
+                tempPfpUrl = currentProfile.pfpUrl; // Reset temp URL
+                
+                const initials = currentProfile.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                const defaultInitials = initials.substring(0, 2);
+
+                // Set modal avatar preview
+                if (currentProfile.pfpUrl) {
+                    modalAvatarPreviewLg.style.backgroundImage = `url('${currentProfile.pfpUrl}')`;
+                    modalAvatarPreviewLg.style.backgroundSize = 'cover';
+                    modalAvatarPreviewLg.style.backgroundPosition = 'center';
+                    modalAvatarPreviewLg.textContent = ''; 
+                } else {
+                    modalAvatarPreviewLg.style.backgroundImage = 'none';
+                    modalAvatarPreviewLg.textContent = defaultInitials;
+                }
+
+                modalOverlay.style.display = 'flex';
+            }
+
+            function closeModal() {
+                modalOverlay.style.display = 'none';
+                // Clear the file input in case user cancels after selection
+                fileInput.value = '';
+            }
+            
+            function handlePFPUpload(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    // Simple file size check (1MB limit)
+                    if (file.size > 1024 * 1024) {
+                        alert("File size exceeds 1MB. Please choose a smaller image.");
+                        fileInput.value = ''; 
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const imageUrl = e.target.result;
+                        tempPfpUrl = imageUrl; // Store URL temporarily
+                        
+                        // Update the modal's avatar preview instantly
+                        modalAvatarPreviewLg.style.backgroundImage = `url('${imageUrl}')`;
+                        modalAvatarPreviewLg.style.backgroundSize = 'cover';
+                        modalAvatarPreviewLg.style.backgroundPosition = 'center';
+                        modalAvatarPreviewLg.textContent = ''; 
+                        
+                        console.log(`Temp profile picture selected: ${file.name}`);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            function saveProfile() {
+                const newName = modalUserName.value.trim();
+                const newId = modalUserId.value.trim();
+                
+                // Clear previous error state
+                modalUserId.classList.remove('error');
+                idError.style.display = 'none';
+
+                // CID Validation: Must be exactly 11 digits
+                const idRegex = /^\d{11}$/;
+                if (!idRegex.test(newId)) {
+                    modalUserId.classList.add('error'); // Add error class for visual feedback
+                    idError.style.display = 'block';
+                    console.error("Save failed: CID must be exactly 11 digits.");
+                    return;
+                }
+                
+                if (!newName) {
+                    // Simple name validation
+                    alert("Name cannot be empty.");
+                    return;
+                }
+
+                // If validation passes, proceed with save
+                
+                // Update the current profile state
+                currentProfile.name = newName;
+                currentProfile.id = newId;
+                currentProfile.pfpUrl = tempPfpUrl; // Commit temp PFP URL
+
+                // Update the sidebar UI
+                updateSidebar(currentProfile);
+
+                console.log("Profile Saved:", currentProfile);
+                
+                closeModal();
+            }
+
+            // --- Event Listeners ---
+
+            // Restrict CID input to numbers only (better UX)
+            modalUserId.addEventListener('input', (e) => {
+                // Strip out any non-numeric characters automatically
+                e.target.value = e.target.value.replace(/\D/g, '').substring(0, 11);
+                // Also check and clear error message if correct length is reached
+                if (e.target.value.length === 11) {
+                    modalUserId.classList.remove('error');
+                    idError.style.display = 'none';
+                }
+            });
+
+            // 1. Search/Filtering Functionality
+            searchInput.addEventListener('keyup', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                destinationItems.forEach(item => {
+                    const locationName = item.querySelector('.location-details span').textContent.toLowerCase();
+                    // Also check the price for more robust search if needed, but sticking to location for now.
+                    item.style.display = locationName.includes(searchTerm) ? 'flex' : 'none';
+                });
+            });
+
+            // 2. Sidebar Navigation Active State
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+                    console.log(`Navigating to: ${item.dataset.page}`);
+                });
+            });
+
+            // 3. Profile Click Triggers Modal
+            [avatarSidebar, nameSidebar, idSidebar, userIconSmall].forEach(el => {
+                el.addEventListener('click', openModal);
+            });
+            
+            // 4. Modal Interactions
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalCancelBtn.addEventListener('click', closeModal);
+            modalSaveBtn.addEventListener('click', saveProfile);
+            
+            // Click outside to close modal
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+
+            // 5. PFP Upload Trigger
+            // Click on the modal's avatar preview or label to open file input
+            modalAvatarPreviewLg.addEventListener('click', () => fileInput.click());
+            document.querySelector('.upload-label').addEventListener('click', (e) => {
+                // Prevent label click from bubbling up and potentially causing issues
+                e.preventDefault(); 
+                fileInput.click();
+            });
+
+            // Listen for file selection
+            fileInput.addEventListener('change', handlePFPUpload);
+            
+            // Initial UI updates based on default state
+            updateSidebar(currentProfile);
+        });
+
+        // Simple custom alert function to replace window.alert (per instructions)
+        function alert(message) {
+            const modalId = 'custom-alert-modal';
+            let alertModal = document.getElementById(modalId);
+
+            if (!alertModal) {
+                alertModal = document.createElement('div');
+                alertModal.id = modalId;
+                alertModal.className = 'modal-overlay';
+                alertModal.style.display = 'none';
+                alertModal.innerHTML = `
+                    <div class="modal-content" style="max-width: 300px; padding: 20px;">
+                        <h3 style="margin-bottom: 15px; color: #333;">Notification</h3>
+                        <p id="alert-message-text" style="margin-bottom: 20px; color: #666;"></p>
+                        <div style="display: flex; justify-content: flex-end;">
+                            <button id="alert-ok-btn" style="padding: 8px 15px; background-color: #ffd65c; color: #333; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">OK</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(alertModal);
+
+                document.getElementById('alert-ok-btn').addEventListener('click', () => {
+                    alertModal.style.display = 'none';
+                });
+
+                alertModal.addEventListener('click', (e) => {
+                    if (e.target === alertModal) {
+                        alertModal.style.display = 'none';
+                    }
+                });
+            }
+
+            document.getElementById('alert-message-text').textContent = message;
+            alertModal.style.display = 'flex';
+        }
+
+    </script>
 </body>
 </html>

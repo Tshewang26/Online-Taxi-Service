@@ -1,137 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JNEC Taxi App</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ride Easy! Dashboard</title>
 
-  <!-- Google Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
+  <!-- External Dependencies -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-  <!-- External CSS -->
-  <link rel="stylesheet" href="../CSS/styles.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="../CSS/styles.css"/>
 </head>
 <body>
-  <!-- Main App Container -->
-  <div class="app-container">
+  <!-- Mobile Menu Toggle Button -->
+  <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 
-    <!-- Header Section -->
-    <header class="app-header">
-      <div class="profile-info">
-        <div id="profile-icon" class="profile-icon">
-          <i id="pfp-icon" class="fa-solid fa-user"></i>
-          <img id="pfp-image" src="#" alt="User Profile Picture">
-        </div>
-        <div class="user-details">
-          <p>Kuzuzangpo la!</p>
-          <strong id="user-name">Rinchen Bidha</strong>
-          <span id="user-cid">CID: 10811002763</span>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="user-profile" id="sidebar-profile-trigger">
+        <div class="avatar" id="user-avatar">D</div>
+        <div class="user-info">
+          <p class="name" id="user-name">Dorji</p>
+          <p class="id" id="user-id">CID: 10811002763</p>
         </div>
       </div>
-      <div class="header-actions">
-        <i class="fa-regular fa-bell"></i>
-        <i id="settings-icon" class="fa-solid fa-gear"></i>
-      </div>
-    </header>
+      <nav class="navigation">
+        <ul>
+          <li class="nav-item active" data-page="dashboard">
+            <i class="fa-solid fa-gauge-high"></i>
+            <a href="#">Dashboard</a>
+          </li>
+          <li class="nav-item" data-page="Booking histroy">
+            <i class="fa-solid fa-book"></i>
+            <a href="Booking_history.html">Booking History</a>
+          </li>
+          <li class="nav-item" data-page="settings">
+            <i class="fa-solid fa-gear"></i>
+            <a href="Setting.html">Settings</a>
+          </li>
+          <li class="nav-item" data-page="book-ride" id="book-ride-nav">
+            <i class="fa-solid fa-taxi"></i>
+            <a href="Ride_book.html">Book a Ride</a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
 
-    <!-- Search Bar -->
-    <div class="search-container">
-      <div class="search-bar">
-        <input type="text" placeholder="Search taxis">
-        <i class="fa-solid fa-magnifying-glass"></i>
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="header">
+        <div></div>
+        <div class="logo">
+          <img src="../IMAGE/download (1).png" alt="Ride Easy Logo">
+          <h1 style="margin-left: -5px;">Ride Easy!</h1>
+        </div>
+        <div class="header-icons">
+          <a href="Notification.html" class="notification-icon" aria-label="Notifications">
+            <i class="fa-solid fa-bell"></i>
+          </a>
+          <a href="profile.html" class="profile-icon" aria-label="User Profile">
+            <i class="fa-solid fa-user"></i>
+          </a>
+        </div>
+      </header>
+
+      <section class="search-bar-container">
+        <div class="search-bar">
+          <input type="text" id="destination-search" placeholder="Search a destination or taxi number..."/>
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+      </section>
+
+      <section class="stats-section">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-car"></i></div>
+          <div class="stat-info">
+            <h3 id="total-rides">24</h3>
+            <p>Total Rides</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-wallet"></i></div>
+          <div class="stat-info">
+            <h3 id="total-spend">Nu 3,450</h3>
+            <p>Total Spend</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="destination-prices">
+        <div class="price-header-banner">Popular Destination Prices</div>
+        <div class="destination-list" id="destination-list">
+          <div class="destination-item">
+            <div class="location-details"><i class="fa-solid fa-location-dot"></i><span>White Temple</span></div>
+            <span class="price">Nu 200</span>
+          </div>
+          <div class="destination-item">
+            <div class="location-details"><i class="fa-solid fa-location-dot"></i><span>Dewathang</span></div>
+            <span class="price">Nu 50</span>
+          </div>
+          <div class="destination-item">
+            <div class="location-details"><i class="fa-solid fa-location-dot"></i><span>Samdrup Jongkhar</span></div>
+            <span class="price">Nu 200</span>
+          </div>
+          <div class="destination-item">
+            <div class="location-details"><i class="fa-solid fa-location-dot"></i><span>Gyezor temple</span></div>
+            <span class="price">Nu 100</span>
+          </div>
+          <div class="destination-item">
+            <div class="location-details"><i class="fa-solid fa-location-dot"></i><span>Hospital</span></div>
+            <span class="price">Nu 50</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="map-section">
+        <div class="map-container">
+          <div class="map-header">
+            <h3><i class="fa-solid fa-map-location-dot"></i> Location (JNEC)</h3>
+          </div>
+          <div id="mini-map" class="mini-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.731749050134!2d91.46408!3d26.86034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e1a5e7c7c3e3a1%3A0x5e3e3b8e3b8e3b8e!2sJigme%20Namgyel%20Engineering%20College%2C%20Dewathang%2C%20Bhutan!5e0!3m2!1sen!2sbt!4v1695981234567"
+              width="100%" height="100%" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="edit-profile-modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Profile</h2>
+          <button class="modal-close-btn" id="modal-close-btn">×</button>
+        </div>
+        <div class="modal-avatar-preview">
+          <div class="avatar" id="modal-avatar-preview-lg">D</div>
+          <span class="upload-label">Click avatar to upload new picture</span>
+        </div>
+        <div class="form-group">
+          <label for="modal-user-name">Name</label>
+          <input type="text" id="modal-user-name" value="Dorji"/>
+        </div>
+        <div class="form-group">
+          <label for="modal-user-id">CID (11 Digits)</label>
+          <input type="text" id="modal-user-id" value="10811002763" maxlength="11" placeholder="Enter 11 digit CID"/>
+          <p class="error-message" id="id-error">CID must be exactly 11 digits.</p>
+        </div>
+        <div class="modal-buttons">
+          <button class="cancel-btn" id="modal-cancel-btn">Cancel</button>
+          <button class="save-btn" id="modal-save-btn">Save Changes</button>
+        </div>
       </div>
     </div>
 
-    <!-- Price List Title -->
-    <h2 class="price-list-title">Price list From JNEC</h2>
-
-    <!-- Redesigned Price List -->
-    <div class="price-list">
-      <div class="price-item">
-        <div class="price-item-info">
-          <i class="fa-solid fa-taxi"></i>
-          <span>White Temple</span>
-        </div>
-        <span class="price-item-value">Nu 200</span>
-      </div>
-
-      <div class="price-item">
-        <div class="price-item-info">
-          <i class="fa-solid fa-taxi"></i>
-          <span>Dewathang</span>
-        </div>
-        <span class="price-item-value">Nu 50</span>
-      </div>
-
-      <div class="price-item">
-        <div class="price-item-info">
-          <i class="fa-solid fa-taxi"></i>
-          <span>Samdrup Jongkhar</span>
-        </div>
-        <span class="price-item-value">Nu 200</span>
-      </div>
-
-      <div class="price-item">
-        <div class="price-item-info">
-          <i class="fa-solid fa-taxi"></i>
-          <span>Gyezor temple</span>
-        </div>
-        <span class="price-item-value">Nu 100</span>
-      </div>
-
-      <div class="price-item">
-        <div class="price-item-info">
-          <i class="fa-solid fa-taxi"></i>
-          <span>Hospital</span>
-        </div>
-        <span class="price-item-value">Nu 50</span>
-      </div>
-    </div>
-
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-      <div class="nav-item active-nav">
-        <i class="fa-solid fa-house"></i>
-      </div>
-      <div class="nav-item">
-        <i class="fa-solid fa-taxi"></i>
-      </div>
-      <div class="nav-item">
-        <i class="fa-solid fa-user"></i>
-      </div>
-    </nav>
+    <!-- Hidden File Upload -->
+    <input type="file" id="file-upload-input" accept="image/*" style="display:none;"/>
   </div>
 
-  <!-- Profile Edit Modal -->
-  <div id="profile-modal" class="modal">
-    <div class="modal-content">
-      <h3>Edit Profile</h3>
-      <div class="pfp-upload-container">
-        <label for="pfp-file-input" class="upload-pfp-btn">
-          Upload Profile Picture
-        </label>
-        <input type="file" id="pfp-file-input" accept="image/*">
-      </div>
-      <div class="modal-form">
-        <label for="edit-name">Name</label>
-        <input type="text" id="edit-name" placeholder="Enter new name">
-        
-        <label for="edit-cid">CID</label>
-        <input type="text" id="edit-cid" placeholder="Enter new CID" maxlength="11">
-        <span id="cid-error-message"></span>
-      </div>
-      <div class="modal-actions">
-        <button class="cancel-btn">Cancel</button>
-        <button class="save-btn">Save</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- External JavaScript -->
+  <!-- Custom Script -->
   <script src="../JAVA/script.js"></script>
 </body>
 </html>
