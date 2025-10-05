@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Easy Admin Dashboard</title>
+    <link rel="stylesheet" href="../CSS/AdminDashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container" id="appContainer">
+        <header class="header">
+            <div class="logo-container">
+                <img class="logo-image" 
+                     src="../IMAGE/download (1).png" 
+                     alt="Ride Easy Logo" 
+                     onerror="this.onerror=null; this.src='https://placehold.co/40x40/3a3f44/FFD700?text=R'; this.style.border='none';">
+                <span class="logo-text">Ride Easy!</span>
+            </div>
+            
+            <div class="header-right">
+                <button class="mobile-menu-toggle" aria-label="Toggle Mobile Menu" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="profile-dropdown-container">
+                    <button class="profile-menu-toggle" aria-label="Toggle Profile Menu" id="profileMenuToggle">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+
+                    <div class="profile-dropdown-menu" id="profileDropdownMenu">
+                        <a href="#" data-action="viewProfile"><i class="fas fa-user-circle"></i> View Profile</a>
+                        <a href="#" data-action="changePassword"><i class="fas fa-key"></i> Change Password</a>
+                        <a href="#" data-action="logout" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="admin-info" id="adminInfoClickable">
+                <div class="profile-pic">
+                    <img id="profilePic" src="https://placehold.co/100x100/FFD700/333333?text=ADM" alt="Admin Profile Picture">
+                </div>
+                <div class="welcome-message">
+                    <span>Kuzuzangpo la!</span>
+                    <p>Welcome back, <span id="adminName">Admin</span></p>
+                </div>
+            </div>
+
+            <div class="dashboard-cards">
+                <a href="Driver.html" class="card driver-details">
+                    <i class="fas fa-car-alt"></i>
+                    <span>Driver's Details</span>
+                </a>
+                
+                <a href="Passenger.html" class="card passenger-details">
+                    <i class="fas fa-users"></i>
+                    <span>Passenger's Details</span>
+                </a>
+                
+                <a href="viewBooking.html" class="card view-booking">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>View Booking</span>
+                </a>
+                
+                <a href="Price.html" class="card view-pricelist">
+                    <i class="fas fa-tags"></i>
+                    <span>View Pricelist</span>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <div class="profile-page" id="profilePage">
+        <header class="profile-header">
+            <button class="back-btn" onclick="closeProfilePage()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="profile-header-content">
+                <i class="fas fa-user-circle profile-header-icon"></i>
+                <h1 class="profile-header-title">My Profile</h1>
+            </div>
+        </header>
+
+        <div class="profile-content">
+            <div class="profile-picture-container">
+                <img id="profilePicLarge" src="https://placehold.co/150x150/FFD700/333333?text=ADM" alt="Profile Picture" class="profile-picture-large">
+                <button class="edit-picture-btn" onclick="openPictureModal()">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+
+            <div class="profile-name" id="profileNameDisplay">Admin</div>
+
+            <div class="profile-info-card">
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Email</span>
+                    <div class="profile-info-value" id="profileEmail">
+                        <i class="fas fa-envelope" style="color: #FFD700;"></i>
+                        05240335.jnec@rub.edu.bt
+                    </div>
+                </div>
+
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Contact Number</span>
+                    <div class="profile-info-value" id="profileContact">
+                        <i class="fas fa-phone" style="color: #FFD700;"></i>
+                        17606074
+                    </div>
+                </div>
+            </div>
+
+            <button class="edit-info-btn" onclick="openEditModal()">
+                <i class="fas fa-edit"></i> Edit Information
+            </button>
+        </div>
+    </div>
+
+    <div id="editModal" class="edit-modal">
+        <div class="edit-modal-content">
+            <h2>Edit Profile Information</h2>
+            
+            <div class="form-group">
+                <label for="editName">Name</label>
+                <input type="text" id="editName" placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+                <label for="editEmail">Email</label>
+                <input type="email" id="editEmail" placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label for="editContact">Contact Number</label>
+                <input type="text" id="editContact" placeholder="Enter your contact number">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+                <button class="btn-save" onclick="saveProfileInfo()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pictureModal" class="edit-modal">
+        <div class="edit-modal-content">
+            <h2>Change Profile Picture</h2>
+            
+            <div class="form-group">
+                <label for="newPicFile">Upload New Picture</label>
+                <input type="file" id="newPicFile" accept="image/*">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closePictureModal()">Cancel</button>
+                <button class="btn-save" onclick="saveProfilePicture()">Save Picture</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="passwordModal" class="edit-modal">
+        <div class="edit-modal-content">
+            <h2>Change Password</h2>
+            
+            <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" placeholder="Enter current password">
+            </div>
+
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" placeholder="Enter new password">
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm New Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm new password">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closePasswordModal()">Cancel</button>
+                <button class="btn-save" onclick="savePassword()">Change Password</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="../JAVA/AdminDashboard.js"></script>
+</body>
+</html>

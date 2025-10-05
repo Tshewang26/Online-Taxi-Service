@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Booking - Ride Easy Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background-color: #faf8f3;
+            color: #212529;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../IMAGE/chinese-clouds-symbol-grace-vector-50202250.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(1px) brightness(98%) contrast(0.8) opacity(0.4);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 100vw;
+            width: 100%;
+            margin: 0;
+            min-height: 100vh;
+            background: transparent;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FFD700 0%, #f4c430 100%);
+            padding: 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #3a3f44;
+            padding: 0.5rem;
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3a3f44;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .search-btn {
+            background: rgba(58, 63, 68, 0.1);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #3a3f44;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .search-btn:hover {
+            background: rgba(58, 63, 68, 0.2);
+        }
+
+        .search-container {
+            display: none;
+            margin-top: 1rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        .search-container.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid rgba(58, 63, 68, 0.2);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3a3f44;
+        }
+
+        .content {
+            padding: 2rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #3a3f44;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title i {
+            font-size: 1.5rem;
+        }
+
+        .driver-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .driver-item {
+            background: linear-gradient(135deg, #FFD700 0%, #ffd900 100%);
+            padding: 2rem 2rem;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3a3f44;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .driver-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .details-view {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #faf8f3;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .details-view::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../IMAGE/chinese-clouds-symbol-grace-vector-50202250.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(1px) brightness(98%) contrast(0.8) opacity(0.4);
+            z-index: -1;
+        }
+
+        .details-view.active {
+            display: block;
+        }
+
+        .details-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: transparent;
+        }
+
+        .details-header {
+            background: linear-gradient(135deg, #FFD700 0%, #f4c430 100%);
+            padding: 1.5rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .details-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3a3f44;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .bookings-list {
+            padding: 1.5rem;
+        }
+
+        .booking-card {
+            background: linear-gradient(135deg, #FFD700 0%, #ffd900 100%);
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+            position: relative;
+        }
+
+        .booking-number {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #3a3f44;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .booking-info {
+            margin-top: 1rem;
+        }
+
+        .info-row {
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #3a3f44;
+        }
+
+        .info-value {
+            color: #3a3f44;
+        }
+
+        .info-value.passenger-name {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        .info-value.destination {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        .info-value.seat {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        .add-booking-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #3a3f44 0%, #2c3136 100%);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .add-booking-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .add-booking-btn i {
+            color: #FFD700;
+            font-size: 1.8rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+            margin: 3% auto;
+            padding: 35px;
+            border-radius: 20px;
+            max-width: 550px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 25px;
+            color: #3a3f44;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #3a3f44;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #FFD700;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .modal-buttons button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-cancel {
+            background-color: #e0e0e0;
+            color: #3a3f44;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #FFD700 0%, #f4c430 100%);
+            color: #3a3f44;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            display: none;
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        @media (min-width: 768px) {
+            .header, .details-header {
+                padding: 1.8rem 3rem;
+            }
+
+            .content, .bookings-list {
+                padding: 2.5rem 3rem;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .details-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="title-row">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="page-title">View Booking</h1>
+                <button class="search-btn" onclick="toggleSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="search-container" id="searchContainer">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search driver name..." onkeyup="searchDrivers()">
+            </div>
+        </header>
+
+        <main class="content">
+            <h2 class="section-title">
+                <i class="far fa-comment-dots"></i>
+                Driver's List
+            </h2>
+            <div class="driver-list" id="driverList"></div>
+        </main>
+
+        <button class="add-booking-btn" onclick="openAddBookingModal()">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <div class="details-view" id="detailsView">
+        <div class="details-container">
+            <header class="details-header">
+                <button class="back-btn" onclick="closeDetails()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="details-title">Details</h1>
+            </header>
+
+            <div class="bookings-list" id="bookingsList"></div>
+        </div>
+    </div>
+
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <h2>Add New Booking</h2>
+            
+            <div class="form-group">
+                <label for="selectDriver">Select Driver *</label>
+                <select id="selectDriver" required onchange="updateDriverDetails()">
+                    <option value="">Choose a driver</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="selectPassenger">Select Passenger *</label>
+                <select id="selectPassenger" required>
+                    <option value="">Choose a passenger</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="seatNumber">Seat Number *</label>
+                <input type="text" id="seatNumber" placeholder="e.g., 1, 2 or 1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="destination">Destination *</label>
+                <input type="text" id="destination" placeholder="e.g., JNEC - SJ" required>
+            </div>
+
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method *</label>
+                <select id="paymentMethod" required>
+                    <option value="">Choose payment method</option>
+                    <option value="Online">Online</option>
+                    <option value="Cash">Cash</option>
+                </select>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeBookingModal()">Cancel</button>
+                <button class="btn-save" onclick="saveBooking()">Add Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Load data from previous interfaces
+        let drivers = [
+            { 
+                id: 1, 
+                name: "Sonam Tshomo", 
+                cid: "11503005306",
+                phone: "+975 17913862", 
+                carNumber: "BP-1-F-2167",
+                license: "DL-BHU-12345", 
+                vehicleType: "4 seater",
+                status: "active" 
+            },
+            { 
+                id: 2, 
+                name: "Tshewang Dorji", 
+                cid: "11234567890",
+                phone: "+975 17654321", 
+                carNumber: "BP-1-A-1234",
+                license: "DL-BHU-67890", 
+                vehicleType: "6 seater",
+                status: "active" 
+            }
+        ];
+
+        let passengers = [
+            { 
+                id: 1, 
+                name: "Tshewang Choden", 
+                cid: "11234567890",
+                phone: "+975 17123456"
+            },
+            { 
+                id: 2, 
+                name: "Tshewang Tenzin", 
+                cid: "10987654321",
+                phone: "+975 17654321"
+            },
+            { 
+                id: 3, 
+                name: "Tshewang Dema", 
+                cid: "11122334455",
+                phone: "+975 17987654"
+            }
+        ];
+
+        let bookings = [
+            {
+                id: 1,
+                driverId: 1,
+                passengerId: 1,
+                seatNumber: "1, 2",
+                destination: "JNEC - SJ",
+                payment: "Online"
+            },
+            {
+                id: 2,
+                driverId: 2,
+                passengerId: 2,
+                seatNumber: "1, 2, 3",
+                destination: "Phuentsholing - Thimphu",
+                payment: "Online"
+            }
+        ];
+
+        let filteredDrivers = [];
+
+        function getDriverBookings(driverId) {
+            return bookings.filter(b => b.driverId === driverId).map(booking => {
+                const driver = drivers.find(d => d.id === booking.driverId);
+                const passenger = passengers.find(p => p.id === booking.passengerId);
+                return {
+                    ...booking,
+                    driverName: driver.name,
+                    driverCid: driver.cid,
+                    driverPhone: driver.phone,
+                    carNumber: driver.carNumber,
+                    carType: driver.vehicleType,
+                    passengerName: passenger.name
+                };
+            });
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (isError ? ' error' : '');
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        function toggleSearch() {
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('searchInput');
+            searchContainer.classList.toggle('active');
+            
+            if (searchContainer.classList.contains('active')) {
+                searchInput.focus();
+            } else {
+                searchInput.value = '';
+                renderDriverList();
+            }
+        }
+
+        function searchDrivers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            renderDriverList(searchTerm);
+        }
+
+        function renderDriverList(searchTerm = '') {
+            const driverList = document.getElementById('driverList');
+            
+            // Filter drivers with bookings
+            const driversWithBookings = drivers.filter(driver => {
+                const hasBookings = bookings.some(b => b.driverId === driver.id);
+                const matchesSearch = driver.name.toLowerCase().includes(searchTerm);
+                return hasBookings && matchesSearch;
+            });
+
+            if (driversWithBookings.length === 0) {
+                driverList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-times"></i>
+                        <p>${searchTerm ? 'No drivers found' : 'No bookings available'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            driverList.innerHTML = driversWithBookings.map((driver, index) => `
+                <div class="driver-item" onclick="showDetails(${driver.id})">
+                    ${index + 1}. ${driver.name}
+                </div>
+            `).join('');
+        }
+
+        function showDetails(driverId) {
+            const driverBookings = getDriverBookings(driverId);
+            const bookingsList = document.getElementById('bookingsList');
+            
+            if (driverBookings.length === 0) {
+                bookingsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-times"></i>
+                        <p>No bookings for this driver</p>
+                    </div>
+                `;
+            } else {
+                bookingsList.innerHTML = driverBookings.map((booking, index) => `
+                    <div class="booking-card">
+                        <div class="booking-number">${index + 1}.</div>
+                        <div class="booking-info">
+                            <div class="info-row">
+                                <span class="info-value" style="font-size: 1.3rem; font-weight: 700;">${booking.driverName}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">CID :</span>
+                                <span class="info-value"> ${booking.driverCid}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Phone no :</span>
+                                <span class="info-value"> ${booking.driverPhone}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Car no:</span>
+                                <span class="info-value"> ${booking.carNumber}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Type of car :</span>
+                                <span class="info-value"> ${booking.carType}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Booked by :</span>
+                                <span class="info-value passenger-name"> ${booking.passengerName}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Seat number :</span>
+                                <span class="info-value seat"> ${booking.seatNumber}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Destination :</span>
+                                <span class="info-value destination"> ${booking.destination}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Payment :</span>
+                                <span class="info-value"> ${booking.payment}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('detailsView').classList.add('active');
+        }
+
+        function closeDetails() {
+            document.getElementById('detailsView').classList.remove('active');
+        }
+
+        function openAddBookingModal() {
+            const selectDriver = document.getElementById('selectDriver');
+            const selectPassenger = document.getElementById('selectPassenger');
+            
+            selectDriver.innerHTML = '<option value="">Choose a driver</option>' + 
+                drivers.filter(d => d.status === 'active').map(d => 
+                    `<option value="${d.id}">${d.name} (${d.carNumber})</option>`
+                ).join('');
+            
+            selectPassenger.innerHTML = '<option value="">Choose a passenger</option>' + 
+                passengers.map(p => 
+                    `<option value="${p.id}">${p.name} (${p.phone})</option>`
+                ).join('');
+            
+            document.getElementById('bookingModal').style.display = 'block';
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            document.getElementById('selectDriver').value = '';
+            document.getElementById('selectPassenger').value = '';
+            document.getElementById('seatNumber').value = '';
+            document.getElementById('destination').value = '';
+            document.getElementById('paymentMethod').value = '';
+        }
+
+        function saveBooking() {
+            const driverId = parseInt(document.getElementById('selectDriver').value);
+            const passengerId = parseInt(document.getElementById('selectPassenger').value);
+            const seatNumber = document.getElementById('seatNumber').value.trim();
+            const destination = document.getElementById('destination').value.trim();
+            const payment = document.getElementById('paymentMethod').value;
+
+            if (!driverId || !passengerId || !seatNumber || !destination || !payment) {
+                showToast('Please fill in all required fields', true);
+                return;
+            }
+
+            const newId = bookings.length > 0 ? Math.max(...bookings.map(b => b.id)) + 1 : 1;
+            bookings.push({
+                id: newId,
+                driverId,
+                passengerId,
+                seatNumber,
+                destination,
+                payment
+            });
+
+            showToast('Booking added successfully!');
+            closeBookingModal();
+            renderDriverList();
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('bookingModal');
+            if (event.target === modal) {
+                closeBookingModal();
+            }
+        }
+
+        renderDriverList();
+    </script>
+</body>
+</html>

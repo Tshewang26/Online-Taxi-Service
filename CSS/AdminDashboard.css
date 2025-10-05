@@ -1,0 +1,592 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    min-height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow-x: hidden;
+    background-color: #faf8f3;
+    color: #212529;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../IMAGE/chinese-clouds-symbol-grace-vector-50202250.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(1px) brightness(98%) contrast(0.8) opacity(0.4);
+    z-index: -2;
+    transition: all 0.5s ease;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1.5rem 0rem 1.5rem;
+    background-color: transparent;
+    color: #3a3f44;
+}
+
+.logo-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: none;
+    margin-right: 15px;
+}
+
+.logo-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.8rem;
+    font-weight: 400;
+    color: #3a3f44;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.mobile-menu-toggle {
+    color: #3a3f44;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.main-content {
+    padding: 0rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: none;
+    gap: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.admin-info:hover {
+    transform: scale(1.02);
+}
+
+.profile-pic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #FFD700;
+}
+
+.welcome-message span {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.welcome-message p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.dashboard-cards {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.card {
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 180px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card i {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+    transition: transform 0.3s;
+}
+
+.card:hover i {
+    transform: scale(1.1);
+}
+
+.driver-details {
+    background-color: #3a3f44;
+    color: #fff;
+}
+.driver-details i {
+    color: #FFD700;
+}
+
+.passenger-details {
+    background-color: #FFD700;
+    color: #212529;
+}
+.passenger-details i {
+    color: #3a3f44;
+}
+
+.view-booking {
+    background-color: #ff9800;
+    color: #fff;
+}
+.view-booking i {
+    color: #fff;
+}
+
+.view-pricelist {
+    background-color: #4CAF50;
+    color: #fff;
+}
+.view-pricelist i {
+    color: #fff;
+}
+
+.profile-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-menu-toggle {
+    color: #3a3f44;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.profile-menu-toggle:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.profile-dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    background-color: #fff;
+    min-width: 180px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 10;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.profile-dropdown-menu a {
+    color: #3a3f44;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+
+.profile-dropdown-menu a i {
+    margin-right: 8px;
+    color: #FFD700;
+}
+
+.profile-dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+.profile-dropdown-menu a.logout {
+    border-top: 1px solid #eee;
+    color: #dc3545;
+}
+.profile-dropdown-menu a.logout i {
+    color: #dc3545;
+}
+
+.profile-dropdown-menu.show {
+    display: block;
+}
+
+/* Profile Page Styling */
+.profile-page {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #faf8f3;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.profile-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../IMAGE/chinese-clouds-symbol-grace-vector-50202250.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(1px) brightness(98%) contrast(0.8) opacity(0.4);
+    z-index: -1;
+}
+
+.profile-page.active {
+    display: block;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, #FFD700 0%, #f4c430 100%);
+    padding: 1.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.back-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #3a3f44;
+    padding: 0.5rem;
+}
+
+.profile-header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.profile-header-icon {
+    font-size: 2rem;
+    color: #3a3f44;
+}
+
+.profile-header-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #3a3f44;
+    margin: 0;
+}
+
+.profile-content {
+    padding: 3rem 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-picture-container {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.profile-picture-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #FFD700;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.edit-picture-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: #FFD700;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.edit-picture-btn:hover {
+    transform: scale(1.1);
+}
+
+.edit-picture-btn i {
+    color: #3a3f44;
+    font-size: 1.2rem;
+}
+
+.profile-info-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #FFD700;
+}
+
+.profile-info-item {
+    margin-bottom: 1.5rem;
+}
+
+.profile-info-item:last-child {
+    margin-bottom: 0;
+}
+
+.profile-info-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.profile-info-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3a3f44;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profile-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #3a3f44;
+}
+
+.edit-info-btn {
+    background: linear-gradient(135deg, #FFD700 0%, #f4c430 100%);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #3a3f44;
+    cursor: pointer;
+    margin-top: 2rem;
+    width: 100%;
+    transition: transform 0.2s;
+}
+
+.edit-info-btn:hover {
+    transform: translateY(-2px);
+}
+
+.edit-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.edit-modal-content {
+    background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+    margin: 3% auto;
+    padding: 35px;
+    border-radius: 20px;
+    max-width: 550px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.edit-modal-content h2 {
+    margin-bottom: 25px;
+    color: #3a3f44;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #3a3f44;
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-group input:focus {
+    border-color: #FFD700;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.modal-buttons button {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-cancel {
+    background-color: #e0e0e0;
+    color: #3a3f44;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #FFD700 0%, #f4c430 100%);
+    color: #3a3f44;
+}
+
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    z-index: 3000;
+    display: none;
+}
+
+.toast.error {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+}
+
+@media (min-width: 768px) {
+    .header {
+        padding: 0.75rem 3rem 0rem 3rem;
+    }
+
+    .logo-container {
+        position: static;
+        transform: none;
+    }
+
+    .mobile-menu-toggle {
+        display: none;
+    }
+
+    .main-content {
+        padding: 0rem 3rem 3rem 3rem;
+    }
+
+    .profile-header {
+        padding: 1.8rem 3rem;
+    }
+
+    .profile-content {
+        padding: 3rem 3rem;
+    }
+
+    .profile-header-title {
+        font-size: 2.5rem;
+    }
+}

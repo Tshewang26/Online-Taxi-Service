@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Price List - Ride Easy Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background-color: #faf8f3;
+            color: #212529;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../IMAGE/chinese-clouds-symbol-grace-vector-50202250.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(1px) brightness(98%) contrast(0.8) opacity(0.4);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 100vw;
+            width: 100%;
+            margin: 0;
+            min-height: 100vh;
+            background: transparent;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FFD700 0%, #f4c430 100%);
+            padding: 1.5rem 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .add-btn {
+            background: rgba(58, 63, 68, 0.1);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #3a3f44;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .add-btn:hover {
+            background: rgba(58, 63, 68, 0.2);
+        }
+
+        .back-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #3a3f44;
+            padding: 0.5rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3a3f44;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .content {
+            padding: 2rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #3a3f44;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title i {
+            font-size: 1.5rem;
+            color: #FFD700;
+        }
+
+        .price-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .price-item {
+            background: linear-gradient(135deg, #FFD700 0%, #ffd900 100%);
+            padding: 2rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .price-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .location-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .location-icon {
+            color: #3a3f44;
+            font-size: 1.5rem;
+        }
+
+        .location-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3a3f44;
+        }
+
+        .price-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .price-amount {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3a3f44;
+        }
+
+        .action-btn {
+            background: rgba(58, 63, 68, 0.1);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #3a3f44;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn:hover {
+            background: rgba(58, 63, 68, 0.2);
+        }
+
+        .action-btn.delete-btn {
+            color: #dc3545;
+        }
+
+        .action-btn.delete-btn:hover {
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .add-price-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #3a3f44 0%, #2c3136 100%);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .add-price-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .add-price-btn i {
+            color: #FFD700;
+            font-size: 1.8rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+            margin: 3% auto;
+            padding: 35px;
+            border-radius: 20px;
+            max-width: 550px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 25px;
+            color: #3a3f44;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #3a3f44;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group input:focus {
+            border-color: #FFD700;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .modal-buttons button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-cancel {
+            background-color: #e0e0e0;
+            color: #3a3f44;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #FFD700 0%, #f4c430 100%);
+            color: #3a3f44;
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            display: none;
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                padding: 1.8rem 3rem;
+            }
+
+            .content {
+                padding: 2.5rem 3rem;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="title-row">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="page-title">View Price List</h1>
+                <button class="add-btn" onclick="openAddModal()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="content">
+            <h2 class="section-title">
+                <i class="fas fa-map-marker-alt"></i>
+                Destinations & Prices
+            </h2>
+            <div class="price-list" id="priceList"></div>
+        </main>
+
+        <button class="add-price-btn" onclick="openAddModal()">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <div id="priceModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Add New Price</h2>
+            
+            <div class="form-group">
+                <label for="locationName">Location Name *</label>
+                <input type="text" id="locationName" placeholder="e.g., White Temple" required>
+            </div>
+
+            <div class="form-group">
+                <label for="priceAmount">Price (Nu) *</label>
+                <input type="number" id="priceAmount" placeholder="e.g., 200" required>
+            </div>
+
+            <div class="modal-buttons" id="modalButtons">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-save" onclick="savePrice()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        let prices = [
+            { id: 1, location: "White Temple", price: 200 },
+            { id: 2, location: "Dewathang", price: 50 },
+            { id: 3, location: "Samdrup Jongkhar", price: 200 },
+            { id: 4, location: "Gyezor temple", price: 100 },
+            { id: 5, location: "Hospital", price: 50 }
+        ];
+
+        let editingId = null;
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (isError ? ' error' : '');
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        function renderPriceList() {
+            const priceList = document.getElementById('priceList');
+            
+            if (prices.length === 0) {
+                priceList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>No prices available</p>
+                    </div>
+                `;
+                return;
+            }
+
+            priceList.innerHTML = prices.map(price => `
+                <div class="price-item">
+                    <div class="location-info">
+                        <i class="fas fa-map-marker-alt location-icon"></i>
+                        <span class="location-name">${price.location}</span>
+                    </div>
+                    <div class="price-info">
+                        <span class="price-amount">Nu ${price.price}</span>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="openEditModal(${price.id})" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="confirmDelete(${price.id})" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAddModal() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Price';
+            document.getElementById('locationName').value = '';
+            document.getElementById('priceAmount').value = '';
+            
+            document.getElementById('modalButtons').innerHTML = `
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-save" onclick="savePrice()">Save</button>
+            `;
+            
+            document.getElementById('priceModal').style.display = 'block';
+        }
+
+        function openEditModal(id) {
+            editingId = id;
+            const price = prices.find(p => p.id === id);
+            
+            document.getElementById('modalTitle').textContent = 'Edit Price';
+            document.getElementById('locationName').value = price.location;
+            document.getElementById('priceAmount').value = price.price;
+            
+            document.getElementById('modalButtons').innerHTML = `
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-save" onclick="savePrice()">Update</button>
+            `;
+            
+            document.getElementById('priceModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('priceModal').style.display = 'none';
+            editingId = null;
+        }
+
+        function confirmDelete(id) {
+            if (confirm('Are you sure you want to delete this price?')) {
+                deletePrice(id);
+            }
+        }
+
+        function savePrice() {
+            const location = document.getElementById('locationName').value.trim();
+            const price = parseInt(document.getElementById('priceAmount').value);
+
+            if (!location || !price || price <= 0) {
+                showToast('Please fill in all fields correctly', true);
+                return;
+            }
+
+            if (editingId) {
+                // Update existing price
+                const index = prices.findIndex(p => p.id === editingId);
+                prices[index] = { id: editingId, location, price };
+                showToast('Price updated successfully!');
+            } else {
+                // Add new price
+                const newId = prices.length > 0 ? Math.max(...prices.map(p => p.id)) + 1 : 1;
+                prices.push({ id: newId, location, price });
+                showToast('Price added successfully!');
+            }
+
+            closeModal();
+            renderPriceList();
+        }
+
+        function deletePrice(id) {
+            prices = prices.filter(p => p.id !== id);
+            showToast('Price deleted successfully!');
+            renderPriceList();
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('priceModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        renderPriceList();
+    </script>
+</body>
+</html>
