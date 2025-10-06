@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Easy - Your Trusted Taxi Service in Bhutan</title>
+    <link rel="stylesheet" href="../CSS/website.css">
+</head>
+<body>
+
+      <!-- Popup Modal -->
+    <div id="registerPopup" class="popup-overlay">
+      <div class="popup-box">
+         <button class="popup-close">&times;</button>
+        <div class="popup-content">
+           <button id="userBtn" class="popup-btn">User</button>
+           <button id="driverBtn" class="popup-btn">Driver</button>
+        </div>
+      </div>
+    </div>
+    <!-- Header -->
+    <header>
+        <div class="logo-section">
+            <img class="logo-icon" src="../IMAGE/download (1).png" alt="Ride Easy Logo">
+            <div class="logo">Ride Easy!</div>
+        </div>
+        <nav>
+            <div class="auth-links">
+                <a href="../html/mainlogin.html">LOGIN</a>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-close" id="menuClose">&times;</div>
+        <ul>
+            <li><a href="About_us.html">About Us</a></li>
+            <li><a href="#" id="contactLink">Contact Us</a></li>
+        </ul>
+        <div id="contactInfo" style="display: none; margin-top: 30px; padding: 20px; background: #f5f1e8; border-radius: 10px;">
+            <h3 style="color: #ffc107; margin-bottom: 15px; font-size: 18px;">Contact Information</h3>
+            <p style="color: #333; margin-bottom: 10px; font-size: 15px;">📧 info@rideeasy.bt</p>
+            <p style="color: #333; font-size: 15px;">📱 +975 XXXX XXXX</p>
+        </div>
+        
+        <!-- Animated Scene in Menu -->
+        <div class="menu-scene">
+            <div class="menu-cloud menu-cloud1"></div>
+            <div class="menu-cloud menu-cloud2"></div>
+            <div class="menu-scene-container">
+                <div class="menu-street"></div>
+                
+                <div class="menu-person">
+                    <div class="menu-person-head"></div>
+                    <div class="menu-person-body"></div>
+                    <div class="menu-person-luggage"></div>
+                </div>
+                
+                <div class="menu-lamp-post">
+                    <div class="menu-lamp-head"></div>
+                    <div class="menu-lamp-light"></div>
+                </div>
+                
+                <div class="menu-bench">
+                    <div class="menu-bench-seat"></div>
+                    <div class="menu-bench-leg"></div>
+                    <div class="menu-bench-leg"></div>
+                </div>
+                
+                <div class="menu-taxi">
+                    <div class="menu-car-roof">
+                        <div class="menu-car-window"></div>
+                        <div class="menu-car-window"></div>
+                    </div>
+                    <div class="menu-car-body">
+                        <div class="menu-wheel">
+                            <div class="menu-wheel-center"></div>
+                        </div>
+                        <div class="menu-wheel">
+                            <div class="menu-wheel-center"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Your Trusted <span class="highlight">Taxi Service</span> in Dewathang</h1>
+            <p>Experience safe, reliable, and comfortable rides across Dewathang. Book your taxi in seconds and travel with peace of mind.</p>
+        </div>
+        <div class="hero-image">
+            <div class="slideshow-container">
+                <div class="slide active">
+                    <img src="../IMAGE/DIT.jpg" alt="Taxi Service 1">
+                </div>
+                <div class="slide">
+                    <img src="../IMAGE/CSN.jpg" alt="Taxi Service 2">
+                </div>
+                <div class="slide">
+                    <img src="../IMAGE/Dewathang.jpg" alt="Taxi Service 3">
+                </div>
+                <div class="slide-indicators">
+                    <span class="indicator active" data-slide="0"></span>
+                    <span class="indicator" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animated Scene Section -->
+    <section class="animated-scene">
+        <div class="sun"></div>
+        <div class="mountains"></div>
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="bird bird1"></div>
+        <div class="bird bird2"></div>
+        
+        <div class="scene-container">
+            <!-- Buildings -->
+            <div class="building building1">
+                <div class="building-window" style="top: 20px; left: 15px;"></div>
+                <div class="building-window" style="top: 20px; right: 15px;"></div>
+                <div class="building-window" style="top: 45px; left: 15px;"></div>
+                <div class="building-window" style="top: 45px; right: 15px;"></div>
+                <div class="building-window" style="top: 70px; left: 15px;"></div>
+                <div class="building-window" style="top: 70px; right: 15px;"></div>
+            </div>
+            <div class="building building2">
+                <div class="building-window" style="top: 15px; left: 12px;"></div>
+                <div class="building-window" style="top: 15px; right: 12px;"></div>
+                <div class="building-window" style="top: 38px; left: 12px;"></div>
+                <div class="building-window" style="top: 38px; right: 12px;"></div>
+                <div class="building-window" style="top: 61px; left: 12px;"></div>
+                <div class="building-window" style="top: 61px; right: 12px;"></div>
+            </div>
+            <div class="building building3">
+                <div class="building-window" style="top: 20px; left: 20px;"></div>
+                <div class="building-window" style="top: 20px; left: 44px;"></div>
+                <div class="building-window" style="top: 20px; right: 20px;"></div>
+                <div class="building-window" style="top: 48px; left: 20px;"></div>
+                <div class="building-window" style="top: 48px; left: 44px;"></div>
+                <div class="building-window" style="top: 48px; right: 20px;"></div>
+                <div class="building-window" style="top: 76px; left: 20px;"></div>
+                <div class="building-window" style="top: 76px; left: 44px;"></div>
+                <div class="building-window" style="top: 76px; right: 20px;"></div>
+                <div class="building-window" style="top: 104px; left: 20px;"></div>
+                <div class="building-window" style="top: 104px; left: 44px;"></div>
+                <div class="building-window" style="top: 104px; right: 20px;"></div>
+            </div>
+            
+            <!-- Street -->
+            <div class="street"></div>
+            
+            <!-- Person with backpack -->
+            <div class="person">
+                <div class="person-head"></div>
+                <div class="person-body"></div>
+                <div class="person-backpack"></div>
+            </div>
+            
+            <!-- Traffic light -->
+            <div class="traffic-light">
+                <div class="traffic-light-box">
+                    <div class="traffic-light-bulb"></div>
+                    <div class="traffic-light-bulb"></div>
+                    <div class="traffic-light-bulb green"></div>
+                </div>
+            </div>
+            
+            <!-- Taxi -->
+            <div class="taxi">
+                <div class="car-roof">
+                    <div class="car-window"></div>
+                    <div class="car-window"></div>
+                </div>
+                <div class="car-body">
+                    <div class="car-door"></div>
+                    <div class="wheel">
+                        <div class="wheel-center"></div>
+                        <div class="wheel-spoke"></div>
+                    </div>
+                    <div class="wheel">
+                        <div class="wheel-center"></div>
+                        <div class="wheel-spoke"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section">
+        <h2>Find Us at <span class="highlight">JNEC</span></h2>
+        <p>Jigme Namgyel Engineering College, Dewathang, Samdrup Jongkhar</p>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.731749050134!2d91.46408!3d26.86034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e1a5e7c7c3e3a1%3A0x5e3e3b8e3b8e3b8e!2sJigme%20Namgyel%20Engineering%20College%2C%20Dewathang%2C%20Bhutan!5e0!3m2!1sen!2sbt!4v1695981234567" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2>Why Choose <span class="highlight">Ride Easy</span>?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚗</div>
+                <h3>Reliable Service</h3>
+                <p>24/7 availability with professional drivers ready to serve you anytime, anywhere in Dewathang.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Affordable Rates</h3>
+                <p>Transparent pricing with no hidden charges. Know your fare before you book.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Easy Booking</h3>
+                <p>Book your ride in seconds through our user-friendly app or website.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Safe & Secure</h3>
+                <p>All drivers are verified and vehicles are regularly maintained for your safety.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Create Account</h3>
+                <p>Sign up in seconds with your phone number or email address.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Book Your Ride</h3>
+                <p>Enter your pickup and destination locations and choose your vehicle.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Track & Travel</h3>
+                <p>Track your driver in real-time and enjoy a comfortable ride.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Pay & Rate</h3>
+                <p>Pay securely and rate your experience to help us improve.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Ride?</h2>
+        <p>Join thousands of happy customers and experience the best taxi service in Dewathang!</p>
+        <button class="primary-btn" onclick="loginPage()">Sign Up Now</button>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Ride Easy</h3>
+                <p style="color: #ccc;">Your trusted taxi service partner in Dewathang. Safe, reliable, and always on time.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="About_us.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Guidelines</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li style="color: #ccc;">📧 05240157.jnec@rub.edu.bt</li>
+                    <li style="color: #ccc;">📱 +975 17913862</li>
+                    <li style="color: #ccc;">📍 Dewathang ,Samdrup Jongkhar</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ride Easy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../JS/website.js"></script>
+</body>
+</html>
