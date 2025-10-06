@@ -1,31 +1,295 @@
+/* Full page background */
 body {
-  background-color: #fff;
-  font-family: "Arial", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background: url("../image/chinese-clouds.jpg")
+              no-repeat center center;
+  background-size: cover;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.login-card {
-  width: 280px; /* compact like mobile app */
-  border: 1px solid #ddd;
+/* Login Container */
+.login-container {
+  background: transparent rgba(169, 160, 160, 0.8);  /* frosted glass effect */
+  backdrop-filter: blur(8px);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  width: 80%;
+  max-width: 800px;
+
+  display: flex;
+  flex-direction: row;   /* side by side */
+  align-items: center;
+  justify-content: space-around;
+  gap: 40px;
 }
 
-.custom-input {
-  background-color: #ffe599;
+/* Left: logo and title */
+.logo-section {
+  position: relative; /* enable absolute positioning */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.logo-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.ride-title {
+  font-family: 'Brush Script MT', cursive;
+  font-size: 2rem;
+  margin: 0;
+  color: #333;
+}
+
+/* Right: login form */
+.login-box {
+  flex: 1;
+  text-align: left;
+}
+
+/* Center login header (icon + Login text) */
+.login-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* center horizontally */
+  gap: 10px;
+  text-align: center;
+}
+
+/* Center header only */
+.login-header {
+  max-width: 350px;
+  margin: 0 auto 20px auto;
+  text-align: center;
+}
+
+/* Left align the form fields */
+form {
+  max-width: 350px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.login-icon {
+  font-size: 2.5rem;
+  color: #000;
+}
+
+/* Inputs */
+/* Input fields same look */
+.input-field {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 12px 15px;
+  border-radius: 8px;
   border: none;
-  border-radius: 20px;
-  padding: 8px 12px;
+  background-color: #f7d97b;  /* same yellow for all */
+  font-size: 1rem;
+}
+
+/* Forgot link */
+.forgot-link {
+  text-decoration: none;
+  color: #007bff;
   font-size: 0.9rem;
 }
 
-.custom-btn {
-  background-color: #ffc107;
-  border: none;
-  border-radius: 20px;
+/* Button */
+/* Enter button smaller + centered */
+.enter-btn {
+  display: block;            /* makes it a block element */
+  margin: 15px auto;         /* auto centers it */
   font-weight: bold;
-  font-size: 0.9rem;
+  border-radius: 12px;
+  padding: 10px 30px;         /* smaller size */
+  font-size: 0.9rem;         /* smaller text */
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  background-color: #f7d97b; /* yellow theme */
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.enter-btn:hover {
+  background-color: #ffbe0b !important;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+.icon{
+  width: 100%;
+  height: 100%;
+}
+/* Smooth transition for everything */
+.back-btn,
+.input-field,
+.enter-btn,
+.forgot-link,
+.register-link {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Back arrow hover */
+.back-btn:hover {
+  color: #f39c12;   /* yellowish hover */
+  transform: translateX(-5px); /* slight slide left */
+}
+
+/* Input hover & focus */
+.input-field:hover,
+.input-field:focus {
+  background-color: #e8e6e0; /* lighter yellow */
+  box-shadow: 0 0 6px rgba(243, 156, 18, 0.6);
+  transform: scale(1.02);
+  outline: none;
+}
+
+/* Enter button hover (you already had, just adding smoothness) */
+.enter-btn:hover {
+  background-color: #ffbe0b !important;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+/* Forgot password hover */
+.forgot-link:hover {
+  color: #e67e22; /* orange */
+  text-decoration: underline;
+  transform: scale(1.05);
+}
+
+/* Register hover */
+.register-link:hover {
+  color: #e67e22; /* orange */
+  text-decoration: underline;
+  transform: scale(1.05);
+}
+
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;   /* stack vertically */
+    width: 90%;
+    padding: 20px;
+    gap: 20px;
+    align-items: center;      /* center children */
+    position: relative;
+  }
+
+  /* Make logo and text inline but centered */
+  .logo-section {
+    flex-direction: row;      /* side by side */
+    justify-content: center;  /* center horizontally */
+    align-items: center;
+    gap: 10px;
+    width: 100%;              /* take full width */
+    position: relative;
+  }
+
+  .ride-title {
+    font-size: 1.8rem;
+  }
+
+  .logo-img {
+    width: 55px;
+    height: 55px;
+  }
+  
+
+  /* Ensure login box stays below */
+  .login-box {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* Register link */
+.register-link {
+  text-decoration: none;
+  color: #007bff; /* blue like in screenshot */
+  font-weight: 500;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+/* Popup overlay (hidden by default) */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none; /* hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Popup box */
+.popup-box {
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Close button */
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Popup content */
+.popup-content {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.popup-btn {
+  background: #f4b400;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
   transition: 0.3s;
 }
 
-.custom-btn:hover {
-  background-color: #e0a800;
-  color: #fff;
+.popup-btn:hover {
+  background: #e6ac00;
+  color: #040101;
+  transform: scale(1.08); /* slight zoom */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
+
+/* Close button hover */
+.popup-close:hover {
+  color: red;
+  transform: rotate(90deg) scale(1.2); /* rotate + zoom */
+}
+
+
+
+

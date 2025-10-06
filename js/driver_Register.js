@@ -1,4 +1,4 @@
-// Registration form validation
+// Driver Registration form validation with popup + redirect
 document.addEventListener("DOMContentLoaded", () => {
   const registrationForm = document.getElementById('registrationForm');
   const popup = document.getElementById('successPopup');
@@ -19,16 +19,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (name && phone && cid && password) {
-      // Show popup message (stay until user closes)
+      // Show popup
       popup.style.display = 'block';
     } else {
       alert('⚠️ Please fill in all fields!');
     }
   });
 
-  // When user clicks the close (×) button
+  // Close popup and redirect
   closeBtn.addEventListener('click', () => {
     popup.style.display = 'none';
-    window.location.href = 'mainlogin.html'; // redirect after closing
+    window.location.href = 'mainlogin.html';
   });
 });

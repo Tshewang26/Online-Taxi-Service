@@ -24,11 +24,11 @@ body {
   animation: fadeIn 0.8s ease;
   max-height: 90vh;
   height: auto;
-  min-height: 70vh;     /* takes 70% of viewport height */
+  min-height: 70vh;
   padding: 40px 0;
 }
 
-/* Left section: logo + title */
+/* Left section */
 .left-panel {
   flex: 1;
   background: transparent;
@@ -38,13 +38,13 @@ body {
   justify-content: center;
   padding: 30px 20px;
   text-align: center;
-  position: relative; /* allows absolute positioning inside */
+  position: relative;
 }
 
 .back-arrow-btn {
   position: absolute;
-  top: 15px;   /* distance from top */
-  left: 15px;  /* distance from left */
+  top: 15px;
+  left: 15px;
   font-size: 1.4rem;
   color: #333;
   text-decoration: none;
@@ -63,7 +63,7 @@ body {
   color: #333;
 }
 
-/* Right section: form */
+/* Right section */
 .right-panel {
   flex: 1.5;
   padding: 35px;
@@ -99,7 +99,7 @@ body {
   width: 100% !important;
   padding: 10px 18px !important;
   border: none;
-  border-radius: 999px !important; /* Pill shape */
+  border-radius: 999px !important;
   font-size: 0.95rem;
   background-color: #f7d684;
   transition: all 0.3s ease;
@@ -122,8 +122,8 @@ body {
   font-size: 1rem;
   font-weight: bold;
   display: block;
-  margin: 0 auto;   /* centers button */
-  width: 180px;     /* smaller button */
+  margin: 0 auto;
+  width: 180px;
   color: #333;
   box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
   transition: all 0.3s ease;
@@ -134,10 +134,10 @@ body {
   color: #000;
 }
 
-/* Mobile: shrink the button */
+/* Mobile Button */
 @media (max-width: 800px) {
   .submit-btn {
-    width: 140px;   /* smaller for phone */
+    width: 140px;
     padding: 8px 8px;
     font-size: 0.9rem;
   }
@@ -163,11 +163,10 @@ body {
 }
 
 /* Responsive */
-/* Desktop: shift form title closer to left panel */
 @media (min-width: 801px) {
   .form-title {
-    text-align: left;   /* align left */
-    margin-left: 20px;  /* push it a bit toward left panel */
+    text-align: left;
+    margin-left: 20px;
   }
   .left-panel {
     padding: 20px 15px;
@@ -183,7 +182,6 @@ body {
     padding: 25px 20px;
   }
 }
-/* Mobile: keep it centered */
 @media (max-width: 800px) {
   .form-title {
     text-align: center;
@@ -191,7 +189,7 @@ body {
   }
 }
 
-/* Success Popup Styling */
+/* ✅ Success Popup Styling */
 .popup-message {
   position: fixed;
   top: 50%;
@@ -202,12 +200,11 @@ body {
   padding: 40px 50px;
   text-align: center;
   box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-  display: none; /* hidden by default */
+  display: none;
   z-index: 9999;
   font-family: Arial, sans-serif;
 }
 
-/* Check icon */
 .popup-message i {
   color: #27ae60;
   font-size: 3rem;
@@ -215,7 +212,6 @@ body {
   display: block;
 }
 
-/* Message text */
 .popup-message p {
   font-size: 1.2rem;
   font-weight: 600;
@@ -223,7 +219,6 @@ body {
   margin: 0;
 }
 
-/* Close button inside popup */
 .close-btn {
   position: absolute;
   top: 8px;
@@ -239,7 +234,3 @@ body {
 .close-btn:hover {
   color: #e74c3c;
 }
-
-
-
-

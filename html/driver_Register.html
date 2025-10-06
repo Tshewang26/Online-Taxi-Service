@@ -3,39 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Registration</title>
+  <title>Driver Registration</title>
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="../css/user_Register.css">
+  <link rel="stylesheet" href="../css/driver_Register.css">
 </head>
 <body>
 
-  <div class="wrapper" >
-  <div class="left-panel">
-    <div class="logo_ride">
-    <a href="mainlogin.html" class="back-arrow-btn"><i class="fa fa-arrow-left"></i></a>
-      <img src="../image/logo.png" alt="Ride Easy Logo">
-      <h2>Ride Easy!</h2>
+  <div class="wrapper">
+    <!-- Left Panel -->
+    <div class="left-panel">
+      <div class="logo_ride">
+        <a href="mainlogin.html" class="back-arrow-btn"><i class="fa fa-arrow-left"></i></a>
+        <img src="../image/logo.png" alt="Ride Easy Logo">
+        <h2>Ride Easy!</h2>
+      </div>
+      <h2 class="form-title" style="font-family: Arial, Helvetica, sans-serif;">Create Your Account (Taxi Driver)</h2>
     </div>
-    <h2 class="form-title" style="font-family: Arial, Helvetica, sans-serif;">Create your Account (Passenger)</h2>
-  </div>
 
-     <!-- Success Popup -->
-     <div id="successPopup" class="popup-message">
-       <button id="closePopup" class="close-btn">&times;</button>
-       <i class="fa-solid fa-circle-check"></i>
-       <p>Registration successful! Welcome!</p>
-     </div>
-
- 
+    <!-- ✅ Success Popup -->
+    <div id="successPopup" class="popup-message">
+      <button id="closePopup" class="close-btn">&times;</button>
+      <i class="fa-solid fa-circle-check"></i>
+      <p>Registration successful! Welcome!</p>
+    </div>
 
     <!-- Right Panel -->
     <div class="right-panel">
-      
-
       <form id="registrationForm">
         <div class="input-group">
           <label for="name">Name</label>
@@ -52,6 +49,31 @@
           <input type="text" id="cid" placeholder="Enter your CID" required>
         </div>
         
+        <div class="input-group">
+          <label for="DoB">Date of Birth</label>
+          <input type="text" id="DOB" placeholder="yyyy-mm-dd" required>
+        </div>
+        
+        <div class="input-group">
+          <label for="accNum">Account Number</label>
+          <input type="text" id="accNum" placeholder="Enter your Account Number" required>
+        </div>
+
+        <div class="input-group">
+          <label for="licence Number">Licence Number</label>
+          <input type="text" id="licNum" placeholder="Enter your licence Number" required>
+        </div>
+
+        <div class="input-group">
+          <label for="Car Number">Car Number</label>
+          <input type="text" id="carNum" placeholder="Enter your Car Number" required>
+        </div>
+
+        <div class="input-group">
+          <label for="Type of car">Type of Car</label>
+          <input type="text" id="typeOfCarNum" placeholder="Type of Car" required>
+        </div>
+
         <div class="input-group">
           <label for="password">New Password</label>
           <input type="password" id="password" placeholder="Create a password" required>
@@ -76,7 +98,7 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Custom JS -->
-  <script src="../js/user_Register.js"></script>
+  <script src="../js/driver_Register.js"></script>
 
 </body>
 </html>
